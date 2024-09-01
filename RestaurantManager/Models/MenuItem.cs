@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestaurantManager.Models
 {
@@ -6,6 +7,10 @@ namespace RestaurantManager.Models
     {
         [Key]
         public int Id { get; set; }
+        
+        [Required]
+        [ForeignKey("Menu")]
+        public int MenuId { get; set; }
 
         [Required]
         public string Name {  get; set; }
@@ -17,5 +22,8 @@ namespace RestaurantManager.Models
 
         [Required]
         public bool isAvaliable { get; set; }
+
+        public int AmountAvaliable { get; set; }
+        
     }
 }

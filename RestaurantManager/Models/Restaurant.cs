@@ -4,6 +4,7 @@ namespace RestaurantManager.Models
 {
     public class Restaurant
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -23,5 +24,7 @@ namespace RestaurantManager.Models
         public Menu Menus { get; set; }
 
         public ICollection<Table> Tables { get; set; }
+
+        public ICollection<Booking> Bookings { get; set; }
     }
 }

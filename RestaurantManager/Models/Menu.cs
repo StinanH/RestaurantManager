@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestaurantManager.Models
 {
@@ -6,6 +7,12 @@ namespace RestaurantManager.Models
     {
         [Key]
         public int Id { get; set; }
+
+        [Required]
+        [ForeignKey("Restaurant")]
+        public int RestaurantId { get; set; }
+
+        [Required]
         public string Name {  get; set; }
         public ICollection<MenuItem> MenuItems { get; set; }
 

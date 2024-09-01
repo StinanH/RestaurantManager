@@ -14,7 +14,9 @@ namespace RestaurantManager.Models
         [MaxLength(500)]
         public string Requests {  get; set; }
 
-        public DateTime ReservationTime { get; set; }
+        public DateTime ReservationDateTimeStart { get; set; }
+
+        public DateTime ReservationDateTimeEnd { get; set; }
 
         public DateTime BookingLastUpdatedAt { get; set; }
 

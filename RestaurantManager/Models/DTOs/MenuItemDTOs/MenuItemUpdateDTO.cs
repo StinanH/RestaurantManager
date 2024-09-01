@@ -1,4 +1,6 @@
-﻿namespace RestaurantManager.Models.DTOs.MenuItemDTOs
+﻿using Microsoft.Identity.Client;
+
+namespace RestaurantManager.Models.DTOs.MenuItemDTOs
 {
     public class MenuItemUpdateDTO
     {
@@ -6,6 +8,7 @@
         public string Name { get; set; }
         public string Category { get; set; }
         public string Description { get; set; }
+        public int AmountAvaliable { get; set; }
 
     }
 }

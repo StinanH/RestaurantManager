@@ -8,6 +8,10 @@
         public int UserId { get; set; }
         public int NrOfPeople { get; set; }
         public string Requests { get; set; }
-        public DateTime ReservationTime { get; set; }
+        public DateTime ReservationDateTimeStart { get; set; }
+
+        public DateTime ReservationDateTimeEnd { get; set; }
+
+        public DateTime BookingLastUpdatedAt { get; set; }
     }
 }

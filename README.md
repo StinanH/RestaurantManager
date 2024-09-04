@@ -138,7 +138,7 @@ Creates new table at restaurant using restaurant id.
 ```
 {
   "restaurantId": 0,    <- Enter id of restaurant
-  "nrOfSeats": 0        <- Maxamount of seats at table (Not currently in use)
+  "nrOfSeats": 0        <- Max amount of seats at table (Not currently in use)
 }
 ```
 ### GET - /restaurant/{restaurantId}/Table/all_tables
@@ -154,8 +154,8 @@ Print info about specific table at restaurant using restaurant id and table id.
 Update info about table at restaurant using restaurant id and table id
 ```
 {
-  "tableId": 0,
-  "nrOfSeats": 0
+  "tableId": 0,    <- id of table to update
+  "nrOfSeats": 0   <- Max amount of number of seats at table (Not currently in use)
 }
 ```
 ### DELETE - /restaurant/{restaurantId}/Table/{tableId}

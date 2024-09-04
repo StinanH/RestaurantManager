@@ -188,10 +188,10 @@ Prints info about user using user id.
 Update userinfo using user id. 
 ```
 {
-  "id": 0,
-  "name": "string",
-  "email": "string",
-  "phoneNumber": "string"
+  "id": 0,                  <- id of user
+  "name": "string",         <- name of user
+  "email": "string",        <- email of user
+  "phoneNumber": "string"   <- phonenumber of user
 }
 ```
 ### DELETE - /User/{id}

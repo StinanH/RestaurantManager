@@ -5,7 +5,7 @@ using RestaurantManager.Services.IServices;
 namespace RestaurantManager.Controllers
 {
     [ApiController]
-    [Route("restaurant:{restaurantId:int}/[controller]")]
+    [Route("restaurant/{restaurantId:int}/[controller]")]
     public class TableController : Controller
     {
         private readonly ITableServices _tableServices;
@@ -25,7 +25,7 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpGet]
-        [Route("view/all_tables")]
+        [Route("all_tables")]
         public async Task<IActionResult> GetAllTables()
         {
             var tables = await _tableServices.GetAllTables();
@@ -34,7 +34,7 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpGet]
-        [Route("view/{tableId:int}")]
+        [Route("{tableId:int}")]
         public async Task<IActionResult> GetTableAsync(int tableId)
         {
             var table = await _tableServices.GetTableAsync(tableId);
@@ -43,7 +43,7 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpPut]
-        [Route("update/{tableId:int}")]
+        [Route("{tableId:int}")]
         public async Task<IActionResult> UpdateRestaurant(int tableId, TableUpdateDTO tableDTO)
         {
             await _tableServices.UpdateTableAsync(tableDTO);
@@ -52,7 +52,7 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpDelete]
-        [Route("delete/{tableId:int}")]
+        [Route("{tableId:int}")]
         public async Task<IActionResult> DeleteRestaurant(int tableId)
         {
             await _tableServices.DeleteTableAsync(tableId);

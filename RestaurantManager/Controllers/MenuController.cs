@@ -31,21 +31,21 @@ namespace RestaurantManager.Controllers
         [Route("all_menus")]
         public async Task<IActionResult> GetAllMenus(int restaurantID)
         {
-            var users = await _menuServices.GetAllMenusAsync(restaurantID);
-            return View(users);
+            var menus = await _menuServices.GetAllMenusAsync(restaurantID);
+            return Ok(menus);
         }
 
         [HttpGet]
         [Route("{menuId:int}")]
         public async Task<IActionResult> GetMenuAsync(int menuId)
         {
-            await _menuServices.GetMenuAsync(menuId);
+            var menu = await _menuServices.GetMenuAsync(menuId);
 
-            return Ok();
+            return Ok(menu);
         }
 
         [HttpPut]
-        [Route("update/{menuId:int}")]
+        [Route("{menuId:int}")]
         public async Task<IActionResult> UpdateMenuAsync(int menuId, MenuUpdateDTO menuUpdateDTO)
         {
             await _menuServices.UpdateMenuAsync(menuUpdateDTO);
@@ -54,7 +54,7 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpDelete]
-        [Route("delete/{menuId:int}")]
+        [Route("{menuId:int}")]
         public async Task<IActionResult> DeleteMenuAsync(int menuId)
         {
             await _menuServices.DeleteMenuAsync(menuId);
@@ -64,7 +64,7 @@ namespace RestaurantManager.Controllers
 
         //Should take in restaurantID and menuId
         [HttpGet]
-        [Route(":{menuId:int}/menuitem:{menuItemId:int}")]
+        [Route("{menuId:int}/{menuItemId:int}")]
         public async Task<IActionResult> GetMenuItemAsync(int restaurantId, int menuId, int menuItemId)
         {
             await _menuServices.GetMenuItemAsync(restaurantId, menuId, menuItemId);
@@ -73,7 +73,7 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpPost]
-        [Route(":{menuId:int}/create")]
+        [Route("{menuId:int}/create")]
         public async Task<ActionResult> CreateMenuItem(int restaurantId, int menuId, MenuItemCreateDTO menuItemDTO)
         {
             await _menuServices.AddMenuItemAsync(restaurantId, menuId, menuItemDTO);

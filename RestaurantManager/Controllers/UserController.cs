@@ -18,7 +18,7 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpPost]
-        [Route("create")]
+        [Route("/create")]
         public async Task<ActionResult> CreateUser (UserCreateDTO userDTO)
         {
             await _userServices.AddUserAsync(userDTO);
@@ -27,7 +27,7 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpGet]
-        [Route("view/all_users")]
+        [Route("/all_users")]
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _userServices.GetAllUsersAsync();
@@ -35,7 +35,7 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpGet]
-        [Route("view/{userId}")]
+        [Route("{userId}")]
         public async Task<IActionResult> GetUser(int userId)
         {
             var user = await _userServices.GetUserAsync(userId);
@@ -44,7 +44,7 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpPut]
-        [Route("update/{id}")]
+        [Route("{id}")]
         public async Task<IActionResult> UpdateUser(int userId, UserUpdateDTO userDTO)
         {
             await _userServices.UpdateUserAsync(userDTO);
@@ -53,7 +53,7 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpDelete]
-        [Route("delete/{id}")]
+        [Route("{id}")]
         public async Task<IActionResult> DeleteUser(int userId)
         {
             await _userServices.DeleteUserAsync(userId);

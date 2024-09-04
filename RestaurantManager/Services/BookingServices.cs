@@ -88,6 +88,8 @@ namespace RestaurantManager.Services
         }
         public async Task<BookingGetDTO> GetBookingAsync(int bookingID)
         {
+            //check that booking is users booking.
+
             var bookingById = await _bookingRepository.GetBookingAsync(bookingID);
 
             var booking = new BookingGetDTO

@@ -25,24 +25,24 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpGet]
-        [Route("view/all_bookings")]
+        [Route("all_bookings")]
         public async Task<IActionResult> GetAllBookings()
         {
             var bookings = await _bookingServices.GetAllBookingsAsync();
             return Ok(bookings);
         }
 
-        [HttpGet]
-        [Route("view/bookingAvaliability")]
-        public async Task<IActionResult> CheckBookingAvaliability(BookingCreateDTO bookingDTO)
-        {
-            var isAvaliable = await _bookingServices.IsBookingAvaliable(bookingDTO);
+        //[HttpGet]
+        //[Route("view/bookingAvaliability")]
+        //public async Task<IActionResult> CheckBookingAvaliability(BookingCreateDTO bookingDTO)
+        //{
+        //    var isAvaliable = await _bookingServices.IsBookingAvaliable(bookingDTO);
 
-            return Ok("is avaliable is : "+isAvaliable);
-        }
+        //    return Ok("is avaliable is : "+isAvaliable);
+        //}
 
         [HttpGet]
-        [Route("view/restaurant_bookings/{restaurantId}")]
+        [Route("{restaurantId:int}/all_bookings")]
         public async Task<IActionResult> GetAllBookingAtRestaurant(int restaurantId)
         {
             await _bookingServices.GetAllBookingsByRestaurantIdAsync(restaurantId);
@@ -51,7 +51,7 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpGet]
-        [Route("view/{userId}")]
+        [Route("{bookingId:int}")]
         public async Task<IActionResult> GetBooking(int bookingId)
         {
             await _bookingServices.GetBookingAsync(bookingId);
@@ -60,16 +60,16 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpPut]
-        [Route("update/{id}")]
-        public async Task<IActionResult> UpdateBooking(int bookingId, BookingUpdateDTO userDTO)
+        [Route("{bookingId:int}")]
+        public async Task<IActionResult> UpdateBooking(int bookingId, BookingUpdateDTO bookingDTO)
         {
-            await _bookingServices.UpdateBookingAsync(userDTO);
+            await _bookingServices.UpdateBookingAsync(bookingDTO);
 
             return Ok();
         }
 
         [HttpDelete]
-        [Route("delete/{id}")]
+        [Route("{bookingId:int}")]
         public async Task<IActionResult> DeleteBooking(int bookingId)
         {
             await _bookingServices.DeleteBookingAsync(bookingId);

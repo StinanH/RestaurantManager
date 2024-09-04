@@ -27,7 +27,7 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpGet]
-        [Route("view/all_restaurants")]
+        [Route("all_restaurants")]
         public async Task<IActionResult> GetAllRestaurants()
         {
             var restaurants = await _restaurantServices.GetAllRestaurantsAsync();
@@ -35,7 +35,7 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpGet]
-        [Route("view/{restaurantId:int}")]
+        [Route("{restaurantId:int}")]
         public async Task<IActionResult> GetRestaurant(int restaurantId)
         {
             var restaurant = await _restaurantServices.GetRestaurantAsync(restaurantId);
@@ -44,7 +44,7 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpPut]
-        [Route("update/{restaurantId:int}")]
+        [Route("{restaurantId:int}")]
         public async Task<IActionResult> UpdateRestaurant(int restaurantId, RestaurantUpdateDTO restaurantDTO)
         {
             await _restaurantServices.UpdateRestaurantAsync(restaurantDTO);
@@ -53,7 +53,7 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpDelete]
-        [Route("delete/{restaurantId:int}")]
+        [Route("{restaurantId:int}")]
         public async Task<IActionResult> DeleteRestaurant(int restaurantId)
         {
             await _restaurantServices.DeleteRestaurantAsync(restaurantId);

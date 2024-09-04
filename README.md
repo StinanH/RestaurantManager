@@ -11,13 +11,13 @@
 ### POST - /Booking/create
 
 Creates a new booking.
-
-  "restaurantId": 0,                             <- Add Id of restaurant you want to book
-  "requestedTime": "2024-09-04T21:39:36.743Z",   <- select date and time
-  "userId": 0,                                   <- Add Id of user that's making the booking
-  "nrOfPeople": 0,                               <- Declare how many people the booking is intended for (not currently taken into account)
-  "requests": "string"                           <- Specify any dietary requests or other.
-
+{
+  "restaurantId": 0,                             Add Id of restaurant you want to book
+  "requestedTime": "2024-09-04T21:39:36.743Z",   select date and time
+  "userId": 0,                                   Add Id of user that's making the booking
+  "nrOfPeople": 0,                               Declare how many people the booking is intended for (not currently taken into account)
+  "requests": "string"                           Specify any dietary requests or other.
+}
 ### GET - /Booking/all_bookings
 
 Lists all bookings in system

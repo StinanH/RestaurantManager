@@ -11,5 +11,6 @@ namespace RestaurantManager.Services.IServices
         Task AddBookingAsync(BookingCreateDTO bookingDTO);
         Task UpdateBookingAsync(BookingUpdateDTO bookingDTO);
         Task DeleteBookingAsync(int bookingId);
+        Task<bool> IsBookingAvaliable(BookingCreateDTO bookingDTO);
     }
 }

@@ -34,7 +34,7 @@ namespace RestaurantManager.Data.Repos
             return menu;
         }
 
-        //Get menuitem by ID
+        //Get menuitems by ID
         public async Task<MenuItem> GetMenuItemAsync(int menuItemId)
         {
             var menuItem = await _context.MenuItems.FirstOrDefaultAsync(m => m.Id == menuItemId);
@@ -47,6 +47,10 @@ namespace RestaurantManager.Data.Repos
         {
             await _context.Menus.AddAsync(menu);
 
+            Restaurant restaurantUsingMenu = await _context.Restaurants.FirstOrDefaultAsync(r => menu.FK_RestaurantId == r.Id);
+
+            restaurantUsingMenu.Menus.Add(menu);
+
             await _context.SaveChangesAsync();
         }
 
@@ -54,6 +58,12 @@ namespace RestaurantManager.Data.Repos
         public async Task AddMenuItemAsync(MenuItem menuItem)
         {
             await _context.MenuItems.AddAsync(menuItem);
+
+            await _context.SaveChangesAsync();
+
+            Menu MenuToAddMenuItemTo = await _context.Menus.FirstOrDefaultAsync(m => menuItem.FK_MenuId == m.Id);
+
+            MenuToAddMenuItemTo.MenuItems.Add(menuItem);
 
             await _context.SaveChangesAsync();
         }
@@ -64,7 +74,6 @@ namespace RestaurantManager.Data.Repos
             _context.Menus.Update(menu);
 
             await _context.SaveChangesAsync();
-
         }
 
         //Update menuItem
@@ -73,9 +82,7 @@ namespace RestaurantManager.Data.Repos
             _context.MenuItems.Update(menuItem);
 
             await _context.SaveChangesAsync();
-
         }
-
 
         //Delete menu
         public async Task DeleteMenuAsync(Menu menu)

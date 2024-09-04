@@ -10,13 +10,13 @@ namespace RestaurantManager.Services.IServices
         //Menu
         Task<IEnumerable<MenuGetDTO>> GetAllMenusAsync(int restaurantId);
         Task<MenuGetDTO> GetMenuAsync(int menuId);
-        Task AddMenuAsync(MenuCreateDTO menuDTO);
+        Task AddMenuAsync(int restaurantId, MenuCreateDTO menuDTO);
         Task UpdateMenuAsync(MenuUpdateDTO menuDTO);
         Task DeleteMenuAsync(int menuId);
 
         //Menuitems
-        Task<MenuItemGetDTO> GetMenuItemAsync(int menuItemId);
-        Task AddMenuItemAsync(MenuItemCreateDTO menuItemDTO);
+        Task<MenuItemGetDTO> GetMenuItemAsync(int restaurantId, int menuId, int menuItemId);
+        Task AddMenuItemAsync(int restaurantId, int menuId, MenuItemCreateDTO menuItemDTO);
         Task UpdateMenuItemAsync(MenuItemUpdateDTO menuItemDTO);
         Task DeleteMenuItemAsync(int menuItemId);
     }

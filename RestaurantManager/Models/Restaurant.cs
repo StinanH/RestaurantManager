@@ -12,7 +12,8 @@ namespace RestaurantManager.Models
         public string Name { get; set; }
 
         [Required]
-        public int PhoneNumber { get; set; }
+        [MaxLength(50)]
+        public string PhoneNumber { get; set; }
 
         [Required]
         public string Email { get; set; }
@@ -21,10 +22,16 @@ namespace RestaurantManager.Models
 
         public string Description { get; set; }
 
-        public Menu Menus { get; set; }
+        //Add hours open?!
 
-        public ICollection<Table> Tables { get; set; }
+        public ICollection<Menu> Menus { get; set; } = new List<Menu>();
 
-        public ICollection<Booking> Bookings { get; set; }
+        public ICollection<Table> Tables { get; set; } = new List<Table>();
+
+        public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+
+        public ICollection<Order> CurrentOrders { get; set; } = new List<Order>();
+
+        public ICollection<Order> FinnishedOrders { get; set; } = new List<Order>();
     }
 }

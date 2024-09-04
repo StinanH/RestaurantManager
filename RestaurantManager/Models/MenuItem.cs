@@ -10,7 +10,13 @@ namespace RestaurantManager.Models
         
         [Required]
         [ForeignKey("Menu")]
-        public int MenuId { get; set; }
+        public int FK_MenuId { get; set; }
+
+        [Required]
+        [ForeignKey("Restaurant")]
+        public int FK_RestaurantId { get; set; }
+
+        public Menu Menu { get; set; }
 
         [Required]
         public string Name {  get; set; }

@@ -1,5 +1,6 @@
 ﻿using RestaurantManager.Models;
 using RestaurantManager.Models.DTOs.RestaurantDTOs;
+using RestaurantManager.Models.DTOs.TableDTOs;
 
 namespace RestaurantManager.Services.IServices
 {
@@ -8,7 +9,7 @@ namespace RestaurantManager.Services.IServices
         Task<IEnumerable<RestaurantGetDTO>> GetAllRestaurantsAsync();
         Task<RestaurantGetDTO> GetRestaurantAsync(int restaurantID);
         Task AddRestaurantAsync(RestaurantCreateDTO restaurantDTO);
-        Task UpdatRestaurantAsync(RestaurantUpdateDTO restaurantDTO);
+        Task UpdateRestaurantAsync(RestaurantUpdateDTO restaurantDTO);
         Task DeleteRestaurantAsync(int restaurantId);
     }
 }

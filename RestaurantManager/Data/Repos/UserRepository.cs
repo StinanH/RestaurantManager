@@ -25,7 +25,8 @@ namespace RestaurantManager.Data.Repos
         //Get a user by ID
         public async Task<User> GetUserAsync(int userId)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Id == userId);
 
             return user;
         }

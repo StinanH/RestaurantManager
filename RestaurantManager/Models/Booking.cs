@@ -11,14 +11,18 @@ namespace RestaurantManager.Models
         [Required]
         public int NrOfPeople { get; set; }
 
+        [Required]
+        public DateTime requestedTime { get; set; }
+
+        public DateTime requestedEndTime { get; set; }
+
         [MaxLength(500)]
         public string Requests {  get; set; }
 
-        public DateTime ReservationDateTimeStart { get; set; }
+        [ForeignKey("Timeslot")]
+        public int FK_TimeslotId { get; set; }
 
-        public DateTime ReservationDateTimeEnd { get; set; }
-
-        public DateTime BookingLastUpdatedAt { get; set; }
+        public TimeSlot Timeslot;
 
         [ForeignKey("User")]
         public int FK_UserID { get; set; }

@@ -10,15 +10,11 @@ namespace RestaurantManager.Models
 
         [Required]
         [ForeignKey("Restaurant")]
-        public int RestaurantId { get; set; }
+        public int FK_RestaurantId { get; set; }
+        public Restaurant Restaurant { get; set; }
 
         [Required]
         public string Name {  get; set; }
-        public ICollection<MenuItem> MenuItems { get; set; }
-
-        //menu days menu is avaliable
-
-        //hours in case of lunchmenu
-
+        public ICollection<MenuItem> MenuItems { get; set; } = new List<MenuItem>();
     }
 }

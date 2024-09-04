@@ -7,7 +7,10 @@ namespace RestaurantManager.Data.Repos.IRepos
         Task<IEnumerable<Restaurant>> GetAllRestaurantsAsync();
         Task<Restaurant> GetRestaurantAsync(int restaurantID);
         Task AddRestaurantAsync(Restaurant restaurant);
-        Task UpdatRestaurantAsync(Restaurant restaurant);
+        Task AddTableToRestaurantAsync(int restaurantId, Table table);
+        Task UpdateRestaurantAsync(Restaurant restaurant);
         Task DeleteRestaurantAsync(Restaurant restaurant);
+
+
     }
 }

@@ -3,16 +3,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestaurantManager.Models
 {
-    public class Table
+    public class TimeSlot
     {
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [ForeignKey("Restaurant")]
-        public int FK_RestaurantId { get; set; }
+        public DateTime StartTime { get; set; }
 
-        [Required]
-        public int NrOfSeats {  get; set; }
+        public DateTime EndTime { get; set; }
+
+        public bool isAvaliable { get; set; }
+
+
+        
     }
 }

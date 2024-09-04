@@ -51,12 +51,12 @@ namespace RestaurantManager.Services
         }
 
         //return bool on these 3 to report success?
-        public async Task AddMenuAsync(MenuCreateDTO menuDTO)
+        public async Task AddMenuAsync(int restaurantId, MenuCreateDTO menuDTO)
         {
             Menu menuToAdd = new Menu
             {
                 Name = menuDTO.Name,
-                RestaurantId = menuDTO.RestaurantId,
+                FK_RestaurantId = menuDTO.RestaurantId,
             };
 
             await _menuRepository.AddMenuAsync(menuToAdd);
@@ -85,8 +85,12 @@ namespace RestaurantManager.Services
         }
 
         //MenuItems
-        public async Task<MenuItemGetDTO> GetMenuItemAsync(int menuItemId)
+        public async Task<MenuItemGetDTO> GetMenuItemAsync(int restaurantId, int menuId, int menuItemId)
         {
+            //restauranid to check permissions
+
+            //check that menu belongs to restaurant, and item belongs to menu, before printing item
+
             MenuItem menuItemById = await _menuRepository.GetMenuItemAsync(menuItemId);
 
             var menuItem = new MenuItemGetDTO
@@ -101,9 +105,16 @@ namespace RestaurantManager.Services
             return menuItem;
         }
 
-        //return bool on these 3 to report success?
-        public async Task AddMenuItemAsync(MenuItemCreateDTO menuItem)
+        //return bool on these 4 to report success?
+
+        //add menuitem to menu
+
+        public async Task AddMenuItemAsync(int restaurantId, int menuId, MenuItemCreateDTO menuItem)
         {
+            //restaurantId so you can check it's your restaruant.
+
+            //check that menu belongs to restaurant,save reference to menu so you can add item to its collection of menuitems.
+
             MenuItem menuItemToAdd = new MenuItem
             {
                 Name = menuItem.Name,

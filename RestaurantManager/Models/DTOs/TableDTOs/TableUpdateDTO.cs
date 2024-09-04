@@ -2,7 +2,7 @@
 {
     public class TableUpdateDTO
     {
-        public int Id { get; set; }
+        public int TableId { get; set; }
         public int NrOfSeats { get; set; }
     }
 }

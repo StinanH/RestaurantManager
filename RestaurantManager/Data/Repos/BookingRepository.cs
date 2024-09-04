@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using RestaurantManager.Data.Repos.IRepos;
 using RestaurantManager.Models;
 
@@ -49,9 +50,57 @@ namespace RestaurantManager.Data.Repos
 
             return booking;
         }
+
+        public async Task<bool> IsBookingAvaliable(Booking booking)
+        {
+            var BookingsAtThatTimeList = await _context.Bookings
+                .Where(b => b.Restaurant.Id == booking.FK_RestaurantId && b.Timeslot.StartTime <= booking.requestedTime && b.Timeslot.EndTime >= booking.requestedEndTime)
+                .ToListAsync();
+
+            var TablesAtRestaurant = await _context.Tables.Where(t => t.FK_RestaurantId == booking.FK_RestaurantId).ToListAsync();
+
+            if (BookingsAtThatTimeList.Count >= TablesAtRestaurant.Count)
+            {
+                //all tables are booked
+                return false;
+            }
+
+            else
+            {
+                return true;
+            }
+        }
+
         public async Task AddBookingAsync(Booking booking)
         {
+            //
+
+            //create booking
             await _context.Bookings.AddAsync(booking);
+
+            await _context.SaveChangesAsync();
+
+            var restaurant = await _context.Restaurants
+                .FirstOrDefaultAsync(r => booking.FK_RestaurantId == r.Id);
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => booking.FK_UserID == u.Id);
+
+
+            //foreach (Booking b in restaurant.Bookings)
+            //{
+            //    foreach (Table t in restaurant.Tables) 
+            //    { 
+            //        if (b.Timeslot.StartTime <= booking.requestedTime && b.Timeslot.EndTime >= booking.requestedEndTime && booking.FK_TableId == t.Id)
+            //        {
+
+            //        } 
+            //    }
+            //}
+
+
+            restaurant.Bookings.Add(booking);
+
+            user.Bookings.Add(booking);
 
             await _context.SaveChangesAsync();
         }

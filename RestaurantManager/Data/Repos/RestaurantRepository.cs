@@ -37,8 +37,38 @@ namespace RestaurantManager.Data.Repos
             await _context.SaveChangesAsync();
         }
 
-        //Update restaurant
-        public async Task UpdatRestaurantAsync(Restaurant restaurant)
+        //Add Table to existing restaurant
+        public async Task AddTableToRestaurantAsync(int restaurantId, Table table)
+        {
+            var restaurant = await _context.Restaurants.FirstOrDefaultAsync(r => r.Id ==restaurantId);
+
+            restaurant.Tables.Add(table);
+
+            await _context.SaveChangesAsync();
+        }
+
+        //Add Menu to existing restaurant
+        public async Task AddBookingToRestaurantAsync(int restaurantId, Booking booking)
+        {
+            var restaurant = await _context.Restaurants.FirstOrDefaultAsync(r => r.Id == restaurantId);
+
+            restaurant.Bookings.Add(booking);
+
+            await _context.SaveChangesAsync();
+        }
+
+        //Add Menu to existing restaurant
+        public async Task AddMenuToRestaurantAsync(int restaurantId, Menu menu)
+        {
+            var restaurant = await _context.Restaurants.FirstOrDefaultAsync(r => r.Id == restaurantId);
+
+            restaurant.Menus.Add(menu);
+
+            await _context.SaveChangesAsync();
+        }
+
+        //Update existing restaurant
+        public async Task UpdateRestaurantAsync(Restaurant restaurant)
         {
             _context.Restaurants.Update(restaurant);
 
@@ -46,7 +76,7 @@ namespace RestaurantManager.Data.Repos
 
         }
 
-        //Delete restaurant
+        //Delete existing restaurant
         public async Task DeleteRestaurantAsync(Restaurant restaurant)
         {
             _context.Restaurants.Remove(restaurant);

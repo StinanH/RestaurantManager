@@ -16,5 +16,6 @@ namespace RestaurantManager.Data.Repos.IRepos
         Task AddMenuItemAsync(MenuItem menuItem);
         Task UpdateMenuItemAsync(MenuItem menuItem);
         Task DeleteMenuItemAsync(MenuItem menuItem);
+
     }
 }

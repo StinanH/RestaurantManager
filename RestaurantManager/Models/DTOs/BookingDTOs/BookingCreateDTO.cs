@@ -1,16 +1,14 @@
-﻿namespace RestaurantManager.Models.DTOs.BookingDTOs
+﻿using RestaurantManager.Models.DTOs.TableDTOs;
+using RestaurantManager.Models.DTOs.TimeSlotDTOs;
+
+namespace RestaurantManager.Models.DTOs.BookingDTOs
 {
     public class BookingCreateDTO
     {
         public int RestaurantId { get; set; }
-        public int TableId { get; set; }
+        public DateTime requestedTime { get; set; }
         public int UserId {  get; set; }
         public int NrOfPeople { get; set; }
         public string Requests { get; set; }
-        public DateTime ReservationDateTimeStart { get; set; }
-
-        public DateTime ReservationDateTimeEnd { get; set; }
-
-        public DateTime BookingLastUpdatedAt { get; set; }
     }
 }

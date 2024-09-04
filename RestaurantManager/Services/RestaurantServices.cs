@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using RestaurantManager.Data.Repos;
 using RestaurantManager.Data.Repos.IRepos;
 using RestaurantManager.Models;
 using RestaurantManager.Models.DTOs.RestaurantDTOs;
+using RestaurantManager.Models.DTOs.TableDTOs;
 using RestaurantManager.Services.IServices;
 
 namespace RestaurantManager.Services
@@ -9,10 +11,12 @@ namespace RestaurantManager.Services
     public class RestaurantServices : IRestaurantServices
     {
         private readonly IRestaurantRepository _restaurantRepository;
+        private readonly ITableRepository _tableRepository;
 
-        public RestaurantServices(IRestaurantRepository restaurantRepository)
+        public RestaurantServices(IRestaurantRepository restaurantRepository, ITableRepository tableRepository)
         {
             _restaurantRepository = restaurantRepository;  
+            _tableRepository = tableRepository;
         }
 
         public async Task<IEnumerable<RestaurantGetDTO>> GetAllRestaurantsAsync()
@@ -46,10 +50,10 @@ namespace RestaurantManager.Services
             };
 
             return restaurant;
-
         }
 
         //return bool on these 3 to report success?
+
         public async Task AddRestaurantAsync(RestaurantCreateDTO restaurantDTO)
         {
             //check if any of the required fields are empty (DTO.name), if so return false.
@@ -67,7 +71,7 @@ namespace RestaurantManager.Services
 
             //return true;
         }
-        public async Task UpdatRestaurantAsync(RestaurantUpdateDTO restaurantDTO)
+        public async Task UpdateRestaurantAsync(RestaurantUpdateDTO restaurantDTO)
         {
             //check if any of the required fields are empty (DTO.name), if so return false.
             
@@ -81,7 +85,7 @@ namespace RestaurantManager.Services
             restaurantToUpdate.Description = restaurantDTO.Description;
             restaurantToUpdate.PhoneNumber = restaurantDTO.PhoneNumber;
 
-            await _restaurantRepository.UpdatRestaurantAsync(restaurantToUpdate);
+            await _restaurantRepository.UpdateRestaurantAsync(restaurantToUpdate);
 
         }
         public async Task DeleteRestaurantAsync(int restaurantId)

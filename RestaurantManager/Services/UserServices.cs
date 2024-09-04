@@ -41,7 +41,8 @@ namespace RestaurantManager.Services
             return user;
         }
 
-        //return bool on these 3 to report success?
+        //return bool on these 4 to report success?
+        
         public async Task AddUserAsync(UserCreateDTO userDTO)
         {
             var userToAdd = new User
@@ -53,7 +54,6 @@ namespace RestaurantManager.Services
             await _userRepository.AddUserAsync(userToAdd);
         }
 
-        //change to Task<Bool>
         public async Task UpdateUserAsync(UserUpdateDTO userDTO)
         {
             //check if any of the required fields are empty (DTO.name), if so return false.

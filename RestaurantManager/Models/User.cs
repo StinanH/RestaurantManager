@@ -1,4 +1,5 @@
 ﻿
+using RestaurantManager.Services;
 using System.ComponentModel.DataAnnotations;
 
 namespace RestaurantManager.Models
@@ -15,8 +16,10 @@ namespace RestaurantManager.Models
         [Required]
         public string Email { get; set; }
         
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
-        public ICollection<Booking> Bookings { get; set; }
+        public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

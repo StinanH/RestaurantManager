@@ -6,75 +6,75 @@
 
 # Rest-API requests
 
-##Booking
+## Booking
 
-###POST - /Booking/create
+### POST - /Booking/create
 
-###GET - /Booking/view/all_bookings
+### GET - /Booking/view/all_bookings
 
-###GET - /Booking/view/bookingAvaliability
+### GET - /Booking/view/bookingAvaliability
 
-###GET - /Booking/view/restaurant_bookings/{restaurantId}
+### GET - /Booking/view/restaurant_bookings/{restaurantId}
 
-###GET - /Booking/view/{userId}
+### GET - /Booking/view/{userId}
 
-###PUT - /Booking/update/{id}
+### PUT - /Booking/update/{id}
 
-###DELETE - /Booking/delete/{id}
-
-
-##Menu
-
-###POST - /restaurant:{restaurantId}/Menu/create - To create new menu
-
-###GET  - /restaurant:{restaurantId}/Menu/all_menus
-
-###GET - /restaurant:{restaurantId}/Menu/{menuId}
-
-###PUT - /restaurant:{restaurantId}/Menu/update/{menuId}
-
-###DELETE - /restaurant:{restaurantId}/Menu/delete/{menuId}
-
-###GET - /restaurant:{restaurantId}/Menu/:{menuId}/menuitem:{menuItemId}
-
-###POST - /restaurant:{restaurantId}/Menu/:{menuId}/create
+### DELETE - /Booking/delete/{id}
 
 
-##Restaurant
+## Menu
 
-###POST - /Restaurant/create
+### POST - /restaurant:{restaurantId}/Menu/create - To create new menu
 
-###GET - /Restaurant/view/all_restaurants
+### GET  - /restaurant:{restaurantId}/Menu/all_menus
 
-###GET - /Restaurant/view/{restaurantId}
+### GET - /restaurant:{restaurantId}/Menu/{menuId}
 
-###PUT - /Restaurant/update/{restaurantId}
+### PUT - /restaurant:{restaurantId}/Menu/update/{menuId}
 
-###DELETE - /Restaurant/delete/{restaurantId}
+### DELETE - /restaurant:{restaurantId}/Menu/delete/{menuId}
 
+### GET - /restaurant:{restaurantId}/Menu/:{menuId}/menuitem:{menuItemId}
 
-##Table
-
-###POST - /restaurant:{restaurantId}/Table/create
-
-###GET - /restaurant:{restaurantId}/Table/view/all_tables
-
-###GET - /restaurant:{restaurantId}/Table/view/{tableId}
-
-###PUT - /restaurant:{restaurantId}/Table/update/{tableId}
-
-###DELETE - /restaurant:{restaurantId}/Table/delete/{tableId}
+### POST - /restaurant:{restaurantId}/Menu/:{menuId}/create
 
 
-##User
+## Restaurant
 
-###POST - /User/create
+### POST - /Restaurant/create
 
-###GET - /User/view/all_users
+### GET - /Restaurant/view/all_restaurants
 
-###GET - /User/view/{userId}
+### GET - /Restaurant/view/{restaurantId}
 
-###PUT - /User/update/{id}
+### PUT - /Restaurant/update/{restaurantId}
 
-###DELETE - /User/delete/{id}
+### DELETE - /Restaurant/delete/{restaurantId}
+
+
+## Table
+
+### POST - /restaurant:{restaurantId}/Table/create
+
+### GET - /restaurant:{restaurantId}/Table/view/all_tables
+
+### GET - /restaurant:{restaurantId}/Table/view/{tableId}
+
+### PUT - /restaurant:{restaurantId}/Table/update/{tableId}
+
+### DELETE - /restaurant:{restaurantId}/Table/delete/{tableId}
+
+
+## User
+
+### POST - /User/create
+
+### GET - /User/view/all_users
+
+### GET - /User/view/{userId}
+
+### PUT - /User/update/{id}
+
+### DELETE - /User/delete/{id}
 

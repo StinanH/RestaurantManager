@@ -14,7 +14,7 @@ Creates a new booking.
 ```
 {
   "restaurantId": 0,                             Add Id of restaurant you want to book
-  "requestedTime": "2024-09-04T21:39:36.743Z",   select date and time
+  "requestedTime": "2024-09-04T21:39:36.743Z",   Date and time when the booking should start (bookings last 2h)
   "userId": 0,                                   Add Id of user that's making the booking
   "nrOfPeople": 0,                               Declare how many people the booking is intended for (not currently taken into account)
   "requests": "string"                           Specify any dietary requests or other.
@@ -50,7 +50,7 @@ Deletes booking using bookings id
 Creates a new Menu using restaurant Id.
 ```
 {
-  "name": "string",       <- name of menu
+  "name": "string",       <- Name of menu
   "restaurantId": 0       <- Id of restaurant where menu is served
 }
 ```
@@ -67,8 +67,8 @@ Lists all menuitems of a menu at a restaurant using restaurants id and menu id.
 Updates a menu at a restaurant using restaurantId and menuId.
 ```
 {
-  "id": 0,           <- id of menu
-  "name": "string"   <- new name of menu
+  "id": 0,           <- Id of menu
+  "name": "string"   <- New name of menu
 }
 ```
 ### DELETE - /restaurant:{restaurantId}/Menu/{menuId}
@@ -84,10 +84,10 @@ Prints menuitem using restaurant id, menu id and menuitem id.
 Creates a new menuitem using restaurants id and menu id.
 ```
 {
-  "name": "string",           <- name of dish/drink/item on menu
-  "category": "string",       <- subcategory if any (for example soup, drink..)
-  "description": "string",    <- description of content
-  "amountAvaliable": 0        <- amount of dishes made (not currently in use)
+  "name": "string",           <- Mame of dish/drink/item on menu
+  "category": "string",       <- Subcategory if any (for example soup, drink..)
+  "description": "string",    <- Description of content
+  "amountAvaliable": 0        <- Amount of dishes made (not currently in use)
 }
 ```
 ## Restaurant
@@ -97,11 +97,11 @@ Creates a new menuitem using restaurants id and menu id.
 Creates new restaurant
 ```
 {
-  "name": "string",           <- name of restaurant 
-  "phoneNumber": "string",    <- phonenumber to restaurant
-  "email": "string",          <- email to restaurant
-  "address": "string",        <- full adress to restaurant
-  "description": "string"     <- description of restaurant
+  "name": "string",           <- Name of restaurant
+  "phoneNumber": "string",    <- Phonenumber
+  "email": "string",          <- Email
+  "address": "string",        <- Full Address
+  "description": "string"     <- Description of restaurant
 }
 ```
 ### GET - /Restaurant/view/all_restaurants
@@ -117,12 +117,12 @@ Prints info of restaurant using restaurant id.
 Updates restaurantinfo using restaurants id. All fields will be replaced.
 ```
 {
-  "id": 0, <- id of restaurant to update
-  "name": "string", <-  new/old name if any for the new restaurant
-  "phoneNumber": "string", <- new/old  phonenumber for restaurant.
-  "email": "string", <- new/old  email for restaurant
-  "address": "string", <- new/old address for restaurant
-  "description": "string" <- new/old description for restaurant
+  "id": 0,                     <- Id of restaurant to update
+  "name": "string",            <- Name of restaurant
+  "phoneNumber": "string",     <- Phonenumber 
+  "email": "string",           <- Email 
+  "address": "string",         <- Full Address
+  "description": "string"      <- Description of restaurant
 }
 ```
 ### DELETE - /Restaurant/delete/{restaurantId}
@@ -137,8 +137,8 @@ Deletes restaurant using restaurant id.
 Creates new table at restaurant using restaurant id.
 ```
 {
-  "restaurantId": 0,    <- Enter id of restaurant
-  "nrOfSeats": 0        <- Max amount of seats at table (Not currently in use)
+  "restaurantId": 0,      <- Enter id of restaurant
+  "nrOfSeats": 0          <- Max amount of seats at table (Not currently in use)
 }
 ```
 ### GET - /restaurant/{restaurantId}/Table/all_tables
@@ -154,8 +154,8 @@ Print info about specific table at restaurant using restaurant id and table id.
 Update info about table at restaurant using restaurant id and table id
 ```
 {
-  "tableId": 0,    <- id of table to update
-  "nrOfSeats": 0   <- Max amount of number of seats at table (Not currently in use)
+  "tableId": 0,          <- Id of table to update
+  "nrOfSeats": 0         <- Max amount of number of seats at table (Not currently in use)
 }
 ```
 ### DELETE - /restaurant/{restaurantId}/Table/{tableId}
@@ -170,9 +170,9 @@ Delete table at restaurant using restaurant id and table id.
 Creates a new user 
 ```
 {
-  "name": "string",         <- name of user
-  "email": "string",        <- email of user
-  "phoneNumber": "string"   <- phonenumber of user
+  "name": "string",         <- Name of user
+  "email": "string",        <- Email of user
+  "phoneNumber": "string"   <- Phonenumber of user
 }
 ```
 ### GET - /User/all_users
@@ -188,10 +188,10 @@ Prints info about user using user id.
 Update userinfo using user id. 
 ```
 {
-  "id": 0,                  <- id of user
-  "name": "string",         <- name of user
-  "email": "string",        <- email of user
-  "phoneNumber": "string"   <- phonenumber of user
+  "id": 0,                  <- Id of user
+  "name": "string",         <- Name of user
+  "email": "string",        <- Email of user
+  "phoneNumber": "string"   <- Phonenumber of user
 }
 ```
 ### DELETE - /User/{id}

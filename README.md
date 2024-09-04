@@ -9,8 +9,9 @@
 ## Booking
 
 ### POST - /Booking/create
-
+```
 Creates a new booking.
+
 {
   "restaurantId": 0,                             Add Id of restaurant you want to book
   "requestedTime": "2024-09-04T21:39:36.743Z",   select date and time
@@ -18,6 +19,7 @@ Creates a new booking.
   "nrOfPeople": 0,                               Declare how many people the booking is intended for (not currently taken into account)
   "requests": "string"                           Specify any dietary requests or other.
 }
+```
 ### GET - /Booking/all_bookings
 
 Lists all bookings in system
@@ -44,12 +46,12 @@ Deletes booking using bookings id
 ## Menu
 
 ### POST - /restaurant:{restaurantId}/Menu/create
-
+```
 {
   "name": "string",       <- name of menu
   "restaurantId": 0       <- Id of restaurant where menu is served
 }
-
+```
 ### GET  - /restaurant:{restaurantId}/Menu/all_menus
 
 Lists all Menus at restaurant

@@ -32,6 +32,5 @@ namespace RestaurantManager.Models
 
         public ICollection<Order> CurrentOrders { get; set; } = new List<Order>();
 
-        public ICollection<Order> FinnishedOrders { get; set; } = new List<Order>();
     }
 }

@@ -16,18 +16,19 @@ namespace RestaurantManager.Data.Repos
         //Get all Menus of restaurant 
         public async Task<IEnumerable<Menu>> GetAllMenusAsync(int restaurantId)
         {
-            var menuList = await _context.Menus
-                .Where(m => m.Id == restaurantId)
+            var menus = await _context.Menus
+                .Where(m => m.FK_RestaurantId == restaurantId)
                 .Include(m => m.MenuItems)
                 .ToListAsync();
 
-            return menuList;
+            return menus;
         }
 
-        //Get menu by ID
-        public async Task<Menu> GetMenuAsync(int menuId)
+        //Get restaurants menu by ID
+        public async Task<Menu> GetMenuAsync(int menuId, int restaurantId)
         {
             var menu = await _context.Menus
+                .Where(m => m.FK_RestaurantId == restaurantId && m.Id == menuId)
                 .Include(m => m.MenuItems)
                 .FirstOrDefaultAsync(m => m.Id == menuId);
 
@@ -35,15 +36,17 @@ namespace RestaurantManager.Data.Repos
         }
 
         //Get menuitems by ID
-        public async Task<MenuItem> GetMenuItemAsync(int menuItemId)
+        public async Task<MenuItem> GetMenuItemAsync(int menuItemId, int restaurantId)
         {
-            var menuItem = await _context.MenuItems.FirstOrDefaultAsync(m => m.Id == menuItemId);
+            var menuItem = await _context.MenuItems
+                .Where(m => m.FK_RestaurantId == restaurantId)
+                .FirstOrDefaultAsync(m => m.Id == menuItemId);
 
             return menuItem;
         }
 
         //Add new menu
-        public async Task AddMenuAsync(Menu menu)
+        public async Task AddMenuAsync(Menu menu, int restaurantId)
         {
             await _context.Menus.AddAsync(menu);
 
@@ -55,7 +58,7 @@ namespace RestaurantManager.Data.Repos
         }
 
         //Add new item to menu
-        public async Task AddMenuItemAsync(MenuItem menuItem)
+        public async Task AddMenuItemAsync(MenuItem menuItem, int restaurantId)
         {
             await _context.MenuItems.AddAsync(menuItem);
 
@@ -69,7 +72,7 @@ namespace RestaurantManager.Data.Repos
         }
 
         //Update menu
-        public async Task UpdateMenuAsync(Menu menu)
+        public async Task UpdateMenuAsync(Menu menu, int restaurantId)
         {
             _context.Menus.Update(menu);
 
@@ -85,7 +88,7 @@ namespace RestaurantManager.Data.Repos
         }
 
         //Delete menu
-        public async Task DeleteMenuAsync(Menu menu)
+        public async Task DeleteMenuAsync(Menu menu, int restaurantId)
         {
             /*
              * Try adding if menuitems aren't getting deleted when menu is deleted

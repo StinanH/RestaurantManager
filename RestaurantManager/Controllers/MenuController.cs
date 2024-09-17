@@ -8,7 +8,7 @@ using RestaurantManager.Services.IServices;
 namespace RestaurantManager.Controllers
 {
     [ApiController]
-    [Route("restaurant:{restaurantId:int}/[controller]")]
+    [Route("restaurant/{restaurantId:int}/[controller]")]
     public class MenuController : Controller
     {
         private readonly IMenuServices _menuServices;
@@ -22,44 +22,45 @@ namespace RestaurantManager.Controllers
         [Route("create")]
         public async Task<ActionResult> CreateMenu(int restaurantId, MenuCreateDTO menuDTO)
         {
-            await _menuServices.AddMenuAsync(restaurantId, menuDTO);
+            await _menuServices.AddMenuAsync(menuDTO, restaurantId);
 
-            return Ok();
+            return Ok("Menu "+menuDTO.Name+" created.");
         }
 
         [HttpGet]
-        [Route("all_menus")]
-        public async Task<IActionResult> GetAllMenus(int restaurantID)
+        [Route("/{idOfRestaurant:int}all_menus")]
+        public async Task<IActionResult> GetAllMenus(int idOfRestaurant)
         {
-            var menus = await _menuServices.GetAllMenusAsync(restaurantID);
+            var menus = await _menuServices.GetAllMenusAsync(idOfRestaurant);
+
             return Ok(menus);
         }
 
         [HttpGet]
         [Route("{menuId:int}")]
-        public async Task<IActionResult> GetMenuAsync(int menuId)
+        public async Task<IActionResult> GetMenuAsync(int menuId, int restaurantId)
         {
-            var menu = await _menuServices.GetMenuAsync(menuId);
+            var menu = await _menuServices.GetMenuAsync(menuId, restaurantId);
 
             return Ok(menu);
         }
 
         [HttpPut]
         [Route("{menuId:int}")]
-        public async Task<IActionResult> UpdateMenuAsync(int menuId, MenuUpdateDTO menuUpdateDTO)
+        public async Task<IActionResult> UpdateMenuAsync(int menuId, MenuUpdateDTO menuUpdateDTO, int restaurantId)
         {
-            await _menuServices.UpdateMenuAsync(menuUpdateDTO);
+            await _menuServices.UpdateMenuAsync(menuUpdateDTO, restaurantId);
 
-            return Ok();
+            return Ok("Menu updated");
         }
 
         [HttpDelete]
         [Route("{menuId:int}")]
-        public async Task<IActionResult> DeleteMenuAsync(int menuId)
+        public async Task<IActionResult> DeleteMenuAsync(int menuId, int restaurantId)
         {
-            await _menuServices.DeleteMenuAsync(menuId);
+            await _menuServices.DeleteMenuAsync(menuId, restaurantId);
 
-            return Ok();
+            return Ok("Menu Deleted");
         }
 
         //Should take in restaurantID and menuId
@@ -78,7 +79,7 @@ namespace RestaurantManager.Controllers
         {
             await _menuServices.AddMenuItemAsync(restaurantId, menuId, menuItemDTO);
 
-            return Ok();
+            return Ok("Menu Created");
         }
 
 

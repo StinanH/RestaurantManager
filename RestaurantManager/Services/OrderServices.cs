@@ -89,7 +89,7 @@ namespace RestaurantManager.Services
             foreach (MenuItemGetDTO mi in orderDTO.itemsInOrder)
             {
 
-                var miToAdd = await _menuRepository.GetMenuItemAsync(mi.Id);
+                var miToAdd = await _menuRepository.GetMenuItemAsync(mi.Id, orderDTO.FK_RestaurantId);
 
                 orderToAdd.itemsInOrder.Add(miToAdd);
             }
@@ -108,8 +108,7 @@ namespace RestaurantManager.Services
             //add menuitems from orderdto to ordertoupdate.
             foreach (MenuItemGetDTO mi in orderDTO.itemsInOrder)
             {
-
-                var miToAdd = await _menuRepository.GetMenuItemAsync(mi.Id);
+                var miToAdd = await _menuRepository.GetMenuItemAsync(mi.Id, orderDTO.FK_RestaurantId);
 
                 orderToUpdate.itemsInOrder.Add(miToAdd);
             }

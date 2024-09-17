@@ -12,7 +12,7 @@ using RestaurantManager.Data;
 namespace RestaurantManager.Migrations
 {
     [DbContext(typeof(RestaurantManagerContext))]
-    [Migration("20240904183823_Init")]
+    [Migration("20240912194258_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -400,12 +400,6 @@ namespace RestaurantManager.Migrations
                     b.Property<int>("FK_UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RestaurantId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RestaurantId1")
-                        .HasColumnType("int");
-
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
@@ -414,10 +408,6 @@ namespace RestaurantManager.Migrations
                     b.HasIndex("FK_RestaurantID");
 
                     b.HasIndex("FK_UserId");
-
-                    b.HasIndex("RestaurantId");
-
-                    b.HasIndex("RestaurantId1");
 
                     b.HasIndex("UserId");
 
@@ -645,7 +635,7 @@ namespace RestaurantManager.Migrations
             modelBuilder.Entity("RestaurantManager.Models.Order", b =>
                 {
                     b.HasOne("RestaurantManager.Models.Restaurant", "Restaurant")
-                        .WithMany()
+                        .WithMany("CurrentOrders")
                         .HasForeignKey("FK_RestaurantID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -655,14 +645,6 @@ namespace RestaurantManager.Migrations
                         .HasForeignKey("FK_UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("RestaurantManager.Models.Restaurant", null)
-                        .WithMany("CurrentOrders")
-                        .HasForeignKey("RestaurantId");
-
-                    b.HasOne("RestaurantManager.Models.Restaurant", null)
-                        .WithMany("FinnishedOrders")
-                        .HasForeignKey("RestaurantId1");
 
                     b.HasOne("RestaurantManager.Models.User", null)
                         .WithMany("Orders")
@@ -695,8 +677,6 @@ namespace RestaurantManager.Migrations
                     b.Navigation("Bookings");
 
                     b.Navigation("CurrentOrders");
-
-                    b.Navigation("FinnishedOrders");
 
                     b.Navigation("Menus");
 

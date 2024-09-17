@@ -23,14 +23,28 @@ namespace RestaurantManager.Services
             var menuList = allMenus.Select(m => new MenuGetDTO
             {
                 Id = m.Id,
-                Name = m.Name
+                Name = m.Name,
+                MenuItems = m.MenuItems.Select(m => new MenuItemGetDTO
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+                    Category = m.Category,
+                    Description = m.Description
+                }).ToList()
             }).ToList();
+
+
+            foreach (var menu in menuList) {
+
+                foreach (var item in menu.MenuItems) { Console.WriteLine(item.Name); }
+            }
 
             return menuList;
         }
-        public async Task<MenuGetDTO> GetMenuAsync(int menuId)
+
+        public async Task<MenuGetDTO> GetMenuAsync(int menuId, int restaurantId)
         {
-            Menu menuById = await _menuRepository.GetMenuAsync(menuId);
+            Menu menuById = await _menuRepository.GetMenuAsync(menuId, restaurantId);
 
             var menu = new MenuGetDTO
             {
@@ -43,15 +57,15 @@ namespace RestaurantManager.Services
                     Category = m.Category,
                     Description = m.Description,
                     AmountAvaliable = m.AmountAvaliable
-                }).ToList()
-            };
+                }).ToList() ?? new List<MenuItemGetDTO>()
+            } ?? new MenuGetDTO { };
 
             return menu;
 
         }
 
         //return bool on these 3 to report success?
-        public async Task AddMenuAsync(int restaurantId, MenuCreateDTO menuDTO)
+        public async Task AddMenuAsync(MenuCreateDTO menuDTO, int restaurantId)
         {
             Menu menuToAdd = new Menu
             {
@@ -59,29 +73,29 @@ namespace RestaurantManager.Services
                 FK_RestaurantId = menuDTO.RestaurantId,
             };
 
-            await _menuRepository.AddMenuAsync(menuToAdd);
+            await _menuRepository.AddMenuAsync(menuToAdd, restaurantId);
 
         }
-        public async Task UpdateMenuAsync(MenuUpdateDTO menuDTO)
+        public async Task UpdateMenuAsync(MenuUpdateDTO menuDTO, int restaurantId)
         {
             //check if any of the required fields are empty (DTO.name), if so return false.
-            Menu menuToUpdate = await _menuRepository.GetMenuAsync(menuDTO.Id);
+            Menu menuToUpdate = await _menuRepository.GetMenuAsync(menuDTO.Id, restaurantId);
 
             //check if ToUpdate result found == null, if so return false
 
             menuToUpdate.Name = menuDTO.Name;
             
-            await _menuRepository.UpdateMenuAsync(menuToUpdate);
+            await _menuRepository.UpdateMenuAsync(menuToUpdate, restaurantId);
 
         }
-        public async Task DeleteMenuAsync(int menuId)
+        public async Task DeleteMenuAsync(int menuId, int restaurantId)
         {
             //check if any of the required fields are empty (DTO.name), if so return false.
-            Menu menuToDelete = await _menuRepository.GetMenuAsync(menuId);
+            Menu menuToDelete = await _menuRepository.GetMenuAsync(menuId, restaurantId);
 
             //check if ToUpdate result found == null, if so return false
 
-            await _menuRepository.DeleteMenuAsync(menuToDelete); 
+            await _menuRepository.DeleteMenuAsync(menuToDelete, restaurantId); 
         }
 
         //MenuItems
@@ -91,7 +105,7 @@ namespace RestaurantManager.Services
 
             //check that menu belongs to restaurant, and item belongs to menu, before printing item
 
-            MenuItem menuItemById = await _menuRepository.GetMenuItemAsync(menuItemId);
+            MenuItem menuItemById = await _menuRepository.GetMenuItemAsync(menuItemId, restaurantId);
 
             var menuItem = new MenuItemGetDTO
             {
@@ -123,12 +137,12 @@ namespace RestaurantManager.Services
                 AmountAvaliable = menuItem.AmountAvaliable
             };
 
-            await _menuRepository.AddMenuItemAsync(menuItemToAdd);
+            await _menuRepository.AddMenuItemAsync(menuItemToAdd, restaurantId);
         }
-        public async Task UpdateMenuItemAsync(MenuItemUpdateDTO menuItem)
+        public async Task UpdateMenuItemAsync(MenuItemUpdateDTO menuItem, int restaurantId)
         {
             //check if any of the required fields are empty (DTO.name), if so return false.
-            var menuItemToUpdate = await _menuRepository.GetMenuItemAsync(menuItem.Id);
+            var menuItemToUpdate = await _menuRepository.GetMenuItemAsync(menuItem.Id, restaurantId);
 
             //check if ToUpdate result found == null, if so return false
             menuItemToUpdate.Name = menuItem.Name;
@@ -138,9 +152,9 @@ namespace RestaurantManager.Services
         
             await _menuRepository.UpdateMenuItemAsync(menuItemToUpdate);
         }
-        public async Task DeleteMenuItemAsync(int menuItemId)
+        public async Task DeleteMenuItemAsync(int menuItemId, int restaurantId)
         {
-            MenuItem menuItemById = await _menuRepository.GetMenuItemAsync(menuItemId);
+            MenuItem menuItemById = await _menuRepository.GetMenuItemAsync(menuItemId, restaurantId);
 
             await _menuRepository.DeleteMenuItemAsync(menuItemById);
         }

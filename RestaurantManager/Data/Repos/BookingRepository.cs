@@ -21,6 +21,7 @@ namespace RestaurantManager.Data.Repos
                 .Include(b => b.Restaurant)
                 .Include(b => b.User)
                 .Include(b => b.Table)
+                .Include(b => b.Timeslot)
                 .ToListAsync();
 
             return bookingsList;
@@ -34,6 +35,7 @@ namespace RestaurantManager.Data.Repos
                 .Include(b => b.Restaurant)
                 .Include(b => b.User)
                 .Include(b => b.Table)
+                .Include(b => b.Timeslot)
                 .ToListAsync();
 
             return bookingsList;

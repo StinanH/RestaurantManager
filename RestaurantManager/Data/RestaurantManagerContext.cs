@@ -63,7 +63,7 @@ namespace RestaurantManager.Data
 
             modelBuilder.Entity<Order>()
                 .HasOne(o => o.Restaurant)
-                .WithMany()
+                .WithMany(r => r.CurrentOrders)
                 .HasForeignKey(o => o.FK_RestaurantID)
                 .OnDelete(DeleteBehavior.Restrict);
 

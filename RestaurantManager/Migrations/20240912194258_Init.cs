@@ -108,8 +108,6 @@ namespace RestaurantManager.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FK_UserId = table.Column<int>(type: "int", nullable: false),
                     FK_RestaurantID = table.Column<int>(type: "int", nullable: false),
-                    RestaurantId = table.Column<int>(type: "int", nullable: true),
-                    RestaurantId1 = table.Column<int>(type: "int", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -121,16 +119,6 @@ namespace RestaurantManager.Migrations
                         principalTable: "Restaurants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Orders_Restaurants_RestaurantId",
-                        column: x => x.RestaurantId,
-                        principalTable: "Restaurants",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Orders_Restaurants_RestaurantId1",
-                        column: x => x.RestaurantId1,
-                        principalTable: "Restaurants",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Orders_Users_FK_UserId",
                         column: x => x.FK_UserId,
@@ -321,16 +309,6 @@ namespace RestaurantManager.Migrations
                 name: "IX_Orders_FK_UserId",
                 table: "Orders",
                 column: "FK_UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_RestaurantId",
-                table: "Orders",
-                column: "RestaurantId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_RestaurantId1",
-                table: "Orders",
-                column: "RestaurantId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_UserId",

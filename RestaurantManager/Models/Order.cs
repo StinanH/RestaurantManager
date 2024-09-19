@@ -17,6 +17,6 @@ namespace RestaurantManager.Models
         [ForeignKey("Restaurant")]
         public int FK_RestaurantID {  get; set; }
         public Restaurant Restaurant { get; set; }
-        public ICollection<MenuItem> itemsInOrder { get; set; } = new List<MenuItem>();
+        public ICollection<MenuItem> MenuItems { get; set; } = new List<MenuItem>();
     }
 }

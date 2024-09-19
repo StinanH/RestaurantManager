@@ -8,6 +8,7 @@
         public string Description { get; set; }
         public int FK_RestaurantId { get; set; }
         public int FK_MenuId { get; set; }
+        public bool IsAvaliable { get; set; }
         public int AmountAvaliable { get; set; }
     }
 }

@@ -73,6 +73,12 @@ namespace RestaurantManager.Data
                 .HasForeignKey(o => o.FK_UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.MenuItems)
+                .WithOne()   
+                .OnDelete(DeleteBehavior.Restrict);
+                
+
             modelBuilder.Entity<User>().HasData
             (
                 new User() { Id = 1, Name = "David Hedman", Email = "David@gmail.com", PhoneNumber = "1111111111" },
@@ -94,30 +100,31 @@ namespace RestaurantManager.Data
                 );
 
             modelBuilder.Entity<MenuItem>().HasData(
-                new MenuItem() { Id = 1, FK_MenuId = 1, Name = "Ananaspizza", Category = "Pizza", Description = "En sorts pizza.", isAvaliable = true, AmountAvaliable = 100 },
-                new MenuItem() { Id = 2, FK_MenuId = 1, Name = "Bananpizza", Category = "Pizza", Description = "En annan pizza.", isAvaliable = true, AmountAvaliable = 100 },
-                new MenuItem() { Id = 3, FK_MenuId = 1, Name = "Bönpizza", Category = "Pizza", Description = "Också pizza.", isAvaliable = true, AmountAvaliable = 100 },
-                new MenuItem() { Id = 4, FK_MenuId = 1, Name = "Pastapizza", Category = "Pizza", Description = "En Rund pizza.", isAvaliable = true, AmountAvaliable = 100 },
-                new MenuItem() { Id = 5, FK_MenuId = 1, Name = "Cuba cola", Category = "Dryck", Description = "Lärre.", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 1, FK_MenuId = 1, FK_RestaurantId = 1, Name = "Ananaspizza", Category = "Pizza", Description = "En sorts pizza.", isAvaliable = true, AmountAvaliable = 100},
+                new MenuItem() { Id = 2, FK_MenuId = 1, FK_RestaurantId = 1, Name = "Bananpizza", Category = "Pizza", Description = "En annan pizza.", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 3, FK_MenuId = 1, FK_RestaurantId = 1, Name = "Bönpizza", Category = "Pizza", Description = "Också pizza.", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 4, FK_MenuId = 1, FK_RestaurantId = 1, Name = "Pastapizza", Category = "Pizza", Description = "En Rund pizza.", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 5, FK_MenuId = 1, FK_RestaurantId = 1, Name = "Cuba cola", Category = "Dryck", Description = "Lärre.", isAvaliable = true, AmountAvaliable = 100 },
 
-                new MenuItem() { Id = 6, FK_MenuId = 2, Name = "Pastasallad med banan", Category = "Pasta", Description = "Pasta med pålägg", isAvaliable = true, AmountAvaliable = 100 },
-                new MenuItem() { Id = 7, FK_MenuId = 2, Name = "Pastasallad med mint", Category = "Pasta", Description = "Pasta med annat pålägg", isAvaliable = true, AmountAvaliable = 100 },
-                new MenuItem() { Id = 8, FK_MenuId = 2, Name = "Pastasallad med lakrits", Category = "Pasta", Description = "Pasta med oätligt pålägg", isAvaliable = true, AmountAvaliable = 100 },
-                new MenuItem() { Id = 9, FK_MenuId = 2, Name = "Capritjosan", Category = "Pizza", Description = "Pizza med champinjoner", isAvaliable = true, AmountAvaliable = 100 },
-                new MenuItem() { Id = 10, FK_MenuId = 2, Name = "Margareta", Category = "Pizza", Description = "Pizza utan champinjoner", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 6, FK_MenuId = 2, FK_RestaurantId = 1, Name = "Pastasallad med banan", Category = "Pasta", Description = "Pasta med pålägg", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 7, FK_MenuId = 2, FK_RestaurantId = 1, Name = "Pastasallad med mint", Category = "Pasta", Description = "Pasta med annat pålägg", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 8, FK_MenuId = 2, FK_RestaurantId = 1, Name = "Pastasallad med lakrits", Category = "Pasta", Description = "Pasta med oätligt pålägg", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 9, FK_MenuId = 2, FK_RestaurantId = 1, Name = "Capritjosan", Category = "Pizza", Description = "Pizza med champinjoner", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 10, FK_MenuId = 2, FK_RestaurantId = 1, Name = "Margareta", Category = "Pizza", Description = "Pizza utan champinjoner", isAvaliable = true, AmountAvaliable = 100 },
 
-                new MenuItem() { Id = 11, FK_MenuId = 3, Name = "Bulle", Category = "Bakelser", Description = "Snurrigt bakverk", isAvaliable = true, AmountAvaliable = 100 },
-                new MenuItem() { Id = 12, FK_MenuId = 3, Name = "Kärleksrutor", Category = "Bakelser", Description = "Fyrkantigt bakverk", isAvaliable = true, AmountAvaliable = 100 },
-                new MenuItem() { Id = 13, FK_MenuId = 3, Name = "Chokladboll", Category = "Bakelser", Description = "Sfäriskt bakverk", isAvaliable = true, AmountAvaliable = 100 },
-                new MenuItem() { Id = 14, FK_MenuId = 3, Name = "Kaffe", Category = "Dryck", Description = "Brun dryck", isAvaliable = true, AmountAvaliable = 100 },
-                new MenuItem() { Id = 15, FK_MenuId = 3, Name = "Té", Category = "Dryck", Description = "Halvgenomskinlig dryck", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 11, FK_MenuId = 3, FK_RestaurantId = 2, Name = "Bulle", Category = "Bakelser", Description = "Snurrigt bakverk", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 12, FK_MenuId = 3, FK_RestaurantId = 2, Name = "Kärleksrutor", Category = "Bakelser", Description = "Fyrkantigt bakverk", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 13, FK_MenuId = 3, FK_RestaurantId = 2, Name = "Chokladboll", Category = "Bakelser", Description = "Sfäriskt bakverk", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 14, FK_MenuId = 3, FK_RestaurantId = 2, Name = "Kaffe", Category = "Dryck", Description = "Brun dryck", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 15, FK_MenuId = 3, FK_RestaurantId = 2, Name = "Té", Category = "Dryck", Description = "Halvgenomskinlig dryck", isAvaliable = true, AmountAvaliable = 100 },
 
-                new MenuItem() { Id = 16, FK_MenuId = 4, Name = "Bulle", Category = "Bakelser", Description = "Snurrigt bakverk", isAvaliable = true, AmountAvaliable = 100 },
-                new MenuItem() { Id = 17, FK_MenuId = 4, Name = "Hallonpaj med grädde", Category = "Bakelser", Description = "Rosa bakverk", isAvaliable = true, AmountAvaliable = 100 },
-                new MenuItem() { Id = 18, FK_MenuId = 4, Name = "Blåbärspaj med grädde", Category = "Bakelser", Description = "det är paj", isAvaliable = true, AmountAvaliable = 100 },
-                new MenuItem() { Id = 19, FK_MenuId = 3, Name = "Kaffe", Category = "Dryck", Description = "Brun dryck", isAvaliable = true, AmountAvaliable = 100 },
-                new MenuItem() { Id = 20, FK_MenuId = 3, Name = "Té", Category = "Dryck", Description = "Halvgenomskinlig dryck", isAvaliable = true, AmountAvaliable = 100 }
+                new MenuItem() { Id = 16, FK_MenuId = 4, FK_RestaurantId = 2, Name = "Bulle", Category = "Bakelser", Description = "Snurrigt bakverk", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 17, FK_MenuId = 4, FK_RestaurantId = 2, Name = "Hallonpaj med grädde", Category = "Bakelser", Description = "Rosa bakverk", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 18, FK_MenuId = 4, FK_RestaurantId = 2, Name = "Blåbärspaj med grädde", Category = "Bakelser", Description = "det är paj", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 19, FK_MenuId = 3, FK_RestaurantId = 2, Name = "Kaffe", Category = "Dryck", Description = "Brun dryck", isAvaliable = true, AmountAvaliable = 100 },
+                new MenuItem() { Id = 20, FK_MenuId = 3, FK_RestaurantId = 2, Name = "Té", Category = "Dryck", Description = "Halvgenomskinlig dryck", isAvaliable = true, AmountAvaliable = 100 }
                 );
+
         }
     }
 }

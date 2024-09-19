@@ -28,10 +28,10 @@ namespace RestaurantManager.Controllers
         }
 
         [HttpGet]
-        [Route("/{idOfRestaurant:int}all_menus")]
-        public async Task<IActionResult> GetAllMenus(int idOfRestaurant)
+        [Route("/all_menus")]
+        public async Task<IActionResult> GetAllMenus(int restaurantId)
         {
-            var menus = await _menuServices.GetAllMenusAsync(idOfRestaurant);
+            var menus = await _menuServices.GetAllMenusAsync(restaurantId);
 
             return Ok(menus);
         }
@@ -68,9 +68,9 @@ namespace RestaurantManager.Controllers
         [Route("{menuId:int}/{menuItemId:int}")]
         public async Task<IActionResult> GetMenuItemAsync(int restaurantId, int menuId, int menuItemId)
         {
-            await _menuServices.GetMenuItemAsync(restaurantId, menuId, menuItemId);
+            var menuItem = await _menuServices.GetMenuItemAsync(restaurantId, menuId, menuItemId);
 
-            return Ok();
+            return Ok(menuItem);
         }
 
         [HttpPost]

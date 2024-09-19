@@ -82,7 +82,6 @@ namespace RestaurantManager.Services
             Menu menuToUpdate = await _menuRepository.GetMenuAsync(menuDTO.Id, restaurantId);
 
             //check if ToUpdate result found == null, if so return false
-
             menuToUpdate.Name = menuDTO.Name;
             
             await _menuRepository.UpdateMenuAsync(menuToUpdate, restaurantId);
@@ -102,7 +101,6 @@ namespace RestaurantManager.Services
         public async Task<MenuItemGetDTO> GetMenuItemAsync(int restaurantId, int menuId, int menuItemId)
         {
             //restauranid to check permissions
-
             //check that menu belongs to restaurant, and item belongs to menu, before printing item
 
             MenuItem menuItemById = await _menuRepository.GetMenuItemAsync(menuItemId, restaurantId);
@@ -113,20 +111,21 @@ namespace RestaurantManager.Services
                 Name = menuItemById.Name,
                 Category = menuItemById.Category,
                 Description = menuItemById.Description,
+                FK_MenuId = menuItemById.FK_MenuId,
+                FK_RestaurantId = menuItemById.FK_RestaurantId,
+                IsAvaliable = menuItemById.isAvaliable,
                 AmountAvaliable = menuItemById.AmountAvaliable
             };
 
             return menuItem;
         }
 
-        //return bool on these 4 to report success?
-
-        //add menuitem to menu
+            //return bool on these 4 to report success?
+            //add menuitem to menu
 
         public async Task AddMenuItemAsync(int restaurantId, int menuId, MenuItemCreateDTO menuItem)
         {
             //restaurantId so you can check it's your restaruant.
-
             //check that menu belongs to restaurant,save reference to menu so you can add item to its collection of menuitems.
 
             MenuItem menuItemToAdd = new MenuItem
@@ -134,7 +133,8 @@ namespace RestaurantManager.Services
                 Name = menuItem.Name,
                 Description = menuItem.Description,
                 Category = menuItem.Category,
-                AmountAvaliable = menuItem.AmountAvaliable
+                AmountAvaliable = menuItem.AmountAvaliable,
+                isAvaliable = false
             };
 
             await _menuRepository.AddMenuItemAsync(menuItemToAdd, restaurantId);

@@ -204,7 +204,8 @@ namespace RestaurantManager.Migrations
                         name: "FK_MenuItems_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -243,26 +244,26 @@ namespace RestaurantManager.Migrations
                 columns: new[] { "Id", "AmountAvaliable", "Category", "Description", "FK_MenuId", "FK_RestaurantId", "Name", "OrderId", "isAvaliable" },
                 values: new object[,]
                 {
-                    { 1, 100, "Pizza", "En sorts pizza.", 1, 0, "Ananaspizza", null, true },
-                    { 2, 100, "Pizza", "En annan pizza.", 1, 0, "Bananpizza", null, true },
-                    { 3, 100, "Pizza", "Också pizza.", 1, 0, "Bönpizza", null, true },
-                    { 4, 100, "Pizza", "En Rund pizza.", 1, 0, "Pastapizza", null, true },
-                    { 5, 100, "Dryck", "Lärre.", 1, 0, "Cuba cola", null, true },
-                    { 6, 100, "Pasta", "Pasta med pålägg", 2, 0, "Pastasallad med banan", null, true },
-                    { 7, 100, "Pasta", "Pasta med annat pålägg", 2, 0, "Pastasallad med mint", null, true },
-                    { 8, 100, "Pasta", "Pasta med oätligt pålägg", 2, 0, "Pastasallad med lakrits", null, true },
-                    { 9, 100, "Pizza", "Pizza med champinjoner", 2, 0, "Capritjosan", null, true },
-                    { 10, 100, "Pizza", "Pizza utan champinjoner", 2, 0, "Margareta", null, true },
-                    { 11, 100, "Bakelser", "Snurrigt bakverk", 3, 0, "Bulle", null, true },
-                    { 12, 100, "Bakelser", "Fyrkantigt bakverk", 3, 0, "Kärleksrutor", null, true },
-                    { 13, 100, "Bakelser", "Sfäriskt bakverk", 3, 0, "Chokladboll", null, true },
-                    { 14, 100, "Dryck", "Brun dryck", 3, 0, "Kaffe", null, true },
-                    { 15, 100, "Dryck", "Halvgenomskinlig dryck", 3, 0, "Té", null, true },
-                    { 16, 100, "Bakelser", "Snurrigt bakverk", 4, 0, "Bulle", null, true },
-                    { 17, 100, "Bakelser", "Rosa bakverk", 4, 0, "Hallonpaj med grädde", null, true },
-                    { 18, 100, "Bakelser", "det är paj", 4, 0, "Blåbärspaj med grädde", null, true },
-                    { 19, 100, "Dryck", "Brun dryck", 3, 0, "Kaffe", null, true },
-                    { 20, 100, "Dryck", "Halvgenomskinlig dryck", 3, 0, "Té", null, true }
+                    { 1, 100, "Pizza", "En sorts pizza.", 1, 1, "Ananaspizza", null, true },
+                    { 2, 100, "Pizza", "En annan pizza.", 1, 1, "Bananpizza", null, true },
+                    { 3, 100, "Pizza", "Också pizza.", 1, 1, "Bönpizza", null, true },
+                    { 4, 100, "Pizza", "En Rund pizza.", 1, 1, "Pastapizza", null, true },
+                    { 5, 100, "Dryck", "Lärre.", 1, 1, "Cuba cola", null, true },
+                    { 6, 100, "Pasta", "Pasta med pålägg", 2, 1, "Pastasallad med banan", null, true },
+                    { 7, 100, "Pasta", "Pasta med annat pålägg", 2, 1, "Pastasallad med mint", null, true },
+                    { 8, 100, "Pasta", "Pasta med oätligt pålägg", 2, 1, "Pastasallad med lakrits", null, true },
+                    { 9, 100, "Pizza", "Pizza med champinjoner", 2, 1, "Capritjosan", null, true },
+                    { 10, 100, "Pizza", "Pizza utan champinjoner", 2, 1, "Margareta", null, true },
+                    { 11, 100, "Bakelser", "Snurrigt bakverk", 3, 2, "Bulle", null, true },
+                    { 12, 100, "Bakelser", "Fyrkantigt bakverk", 3, 2, "Kärleksrutor", null, true },
+                    { 13, 100, "Bakelser", "Sfäriskt bakverk", 3, 2, "Chokladboll", null, true },
+                    { 14, 100, "Dryck", "Brun dryck", 3, 2, "Kaffe", null, true },
+                    { 15, 100, "Dryck", "Halvgenomskinlig dryck", 3, 2, "Té", null, true },
+                    { 16, 100, "Bakelser", "Snurrigt bakverk", 4, 2, "Bulle", null, true },
+                    { 17, 100, "Bakelser", "Rosa bakverk", 4, 2, "Hallonpaj med grädde", null, true },
+                    { 18, 100, "Bakelser", "det är paj", 4, 2, "Blåbärspaj med grädde", null, true },
+                    { 19, 100, "Dryck", "Brun dryck", 3, 2, "Kaffe", null, true },
+                    { 20, 100, "Dryck", "Halvgenomskinlig dryck", 3, 2, "Té", null, true }
                 });
 
             migrationBuilder.CreateIndex(

@@ -7,7 +7,7 @@ namespace RestaurantManager.Models.DTOs.OrderDTOs
         public int Id { get; set; }
         public int FK_UserId { get; set; }
         public int FK_RestaurantId { get; set; }
-        public ICollection<MenuItemGetDTO> itemsInOrder { get; set; }
+        public ICollection<MenuItemGetDTO> MenuItems { get; set; } = new List<MenuItemGetDTO>();
     }
 }
 

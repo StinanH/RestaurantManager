@@ -12,7 +12,7 @@ using RestaurantManager.Data;
 namespace RestaurantManager.Migrations
 {
     [DbContext(typeof(RestaurantManagerContext))]
-    [Migration("20240912194258_Init")]
+    [Migration("20240919114001_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -171,7 +171,7 @@ namespace RestaurantManager.Migrations
                             Category = "Pizza",
                             Description = "En sorts pizza.",
                             FK_MenuId = 1,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 1,
                             Name = "Ananaspizza",
                             isAvaliable = true
                         },
@@ -182,7 +182,7 @@ namespace RestaurantManager.Migrations
                             Category = "Pizza",
                             Description = "En annan pizza.",
                             FK_MenuId = 1,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 1,
                             Name = "Bananpizza",
                             isAvaliable = true
                         },
@@ -193,7 +193,7 @@ namespace RestaurantManager.Migrations
                             Category = "Pizza",
                             Description = "Också pizza.",
                             FK_MenuId = 1,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 1,
                             Name = "Bönpizza",
                             isAvaliable = true
                         },
@@ -204,7 +204,7 @@ namespace RestaurantManager.Migrations
                             Category = "Pizza",
                             Description = "En Rund pizza.",
                             FK_MenuId = 1,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 1,
                             Name = "Pastapizza",
                             isAvaliable = true
                         },
@@ -215,7 +215,7 @@ namespace RestaurantManager.Migrations
                             Category = "Dryck",
                             Description = "Lärre.",
                             FK_MenuId = 1,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 1,
                             Name = "Cuba cola",
                             isAvaliable = true
                         },
@@ -226,7 +226,7 @@ namespace RestaurantManager.Migrations
                             Category = "Pasta",
                             Description = "Pasta med pålägg",
                             FK_MenuId = 2,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 1,
                             Name = "Pastasallad med banan",
                             isAvaliable = true
                         },
@@ -237,7 +237,7 @@ namespace RestaurantManager.Migrations
                             Category = "Pasta",
                             Description = "Pasta med annat pålägg",
                             FK_MenuId = 2,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 1,
                             Name = "Pastasallad med mint",
                             isAvaliable = true
                         },
@@ -248,7 +248,7 @@ namespace RestaurantManager.Migrations
                             Category = "Pasta",
                             Description = "Pasta med oätligt pålägg",
                             FK_MenuId = 2,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 1,
                             Name = "Pastasallad med lakrits",
                             isAvaliable = true
                         },
@@ -259,7 +259,7 @@ namespace RestaurantManager.Migrations
                             Category = "Pizza",
                             Description = "Pizza med champinjoner",
                             FK_MenuId = 2,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 1,
                             Name = "Capritjosan",
                             isAvaliable = true
                         },
@@ -270,7 +270,7 @@ namespace RestaurantManager.Migrations
                             Category = "Pizza",
                             Description = "Pizza utan champinjoner",
                             FK_MenuId = 2,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 1,
                             Name = "Margareta",
                             isAvaliable = true
                         },
@@ -281,7 +281,7 @@ namespace RestaurantManager.Migrations
                             Category = "Bakelser",
                             Description = "Snurrigt bakverk",
                             FK_MenuId = 3,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 2,
                             Name = "Bulle",
                             isAvaliable = true
                         },
@@ -292,7 +292,7 @@ namespace RestaurantManager.Migrations
                             Category = "Bakelser",
                             Description = "Fyrkantigt bakverk",
                             FK_MenuId = 3,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 2,
                             Name = "Kärleksrutor",
                             isAvaliable = true
                         },
@@ -303,7 +303,7 @@ namespace RestaurantManager.Migrations
                             Category = "Bakelser",
                             Description = "Sfäriskt bakverk",
                             FK_MenuId = 3,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 2,
                             Name = "Chokladboll",
                             isAvaliable = true
                         },
@@ -314,7 +314,7 @@ namespace RestaurantManager.Migrations
                             Category = "Dryck",
                             Description = "Brun dryck",
                             FK_MenuId = 3,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 2,
                             Name = "Kaffe",
                             isAvaliable = true
                         },
@@ -325,7 +325,7 @@ namespace RestaurantManager.Migrations
                             Category = "Dryck",
                             Description = "Halvgenomskinlig dryck",
                             FK_MenuId = 3,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 2,
                             Name = "Té",
                             isAvaliable = true
                         },
@@ -336,7 +336,7 @@ namespace RestaurantManager.Migrations
                             Category = "Bakelser",
                             Description = "Snurrigt bakverk",
                             FK_MenuId = 4,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 2,
                             Name = "Bulle",
                             isAvaliable = true
                         },
@@ -347,7 +347,7 @@ namespace RestaurantManager.Migrations
                             Category = "Bakelser",
                             Description = "Rosa bakverk",
                             FK_MenuId = 4,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 2,
                             Name = "Hallonpaj med grädde",
                             isAvaliable = true
                         },
@@ -358,7 +358,7 @@ namespace RestaurantManager.Migrations
                             Category = "Bakelser",
                             Description = "det är paj",
                             FK_MenuId = 4,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 2,
                             Name = "Blåbärspaj med grädde",
                             isAvaliable = true
                         },
@@ -369,7 +369,7 @@ namespace RestaurantManager.Migrations
                             Category = "Dryck",
                             Description = "Brun dryck",
                             FK_MenuId = 3,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 2,
                             Name = "Kaffe",
                             isAvaliable = true
                         },
@@ -380,7 +380,7 @@ namespace RestaurantManager.Migrations
                             Category = "Dryck",
                             Description = "Halvgenomskinlig dryck",
                             FK_MenuId = 3,
-                            FK_RestaurantId = 0,
+                            FK_RestaurantId = 2,
                             Name = "Té",
                             isAvaliable = true
                         });
@@ -626,8 +626,9 @@ namespace RestaurantManager.Migrations
                         .IsRequired();
 
                     b.HasOne("RestaurantManager.Models.Order", null)
-                        .WithMany("itemsInOrder")
-                        .HasForeignKey("OrderId");
+                        .WithMany("MenuItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Menu");
                 });
@@ -669,7 +670,7 @@ namespace RestaurantManager.Migrations
 
             modelBuilder.Entity("RestaurantManager.Models.Order", b =>
                 {
-                    b.Navigation("itemsInOrder");
+                    b.Navigation("MenuItems");
                 });
 
             modelBuilder.Entity("RestaurantManager.Models.Restaurant", b =>

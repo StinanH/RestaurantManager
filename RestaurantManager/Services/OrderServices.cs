@@ -42,7 +42,18 @@ namespace RestaurantManager.Services
             {
                 Id = o.Id,
                 FK_RestaurantId = o.FK_RestaurantID,
-                FK_UserId = o.FK_UserId
+                FK_UserId = o.FK_UserId,
+                MenuItems = o.MenuItems.Select(o => new MenuItemGetDTO
+                {
+                    Id = o.Id,
+                    Name = o.Name,
+                    Category = o.Category,
+                    Description = o.Description,
+                    FK_MenuId = o.FK_MenuId,
+                    FK_RestaurantId = o.FK_RestaurantId,
+                    IsAvaliable = o.isAvaliable,
+                    AmountAvaliable = o.AmountAvaliable
+                }).ToList()
 
                 //Add that it prints items in order.
 
@@ -62,16 +73,18 @@ namespace RestaurantManager.Services
                 FK_UserId = orderById.FK_UserId
             };
 
-            foreach (MenuItem m in orderById.itemsInOrder)
+            foreach (MenuItem m in orderById.MenuItems)
             {
-                order.itemsInOrder.Add(new MenuItemGetDTO
+                order.MenuItems.Add(new MenuItemGetDTO
                 {
                     Id = m.Id,
+                    Name = m.Name,
+                    Category=m.Category,
+                    Description = m.Description,
                     FK_MenuId = m.FK_MenuId,
                     FK_RestaurantId = m.FK_RestaurantId,
-                    Name = m.Name,
-                    Description = m.Description,
-                    AmountAvaliable = m.AmountAvaliable
+                    AmountAvaliable = m.AmountAvaliable,
+                    IsAvaliable = m.isAvaliable
                 });
             }
 
@@ -91,7 +104,7 @@ namespace RestaurantManager.Services
 
                 var miToAdd = await _menuRepository.GetMenuItemAsync(mi.Id, orderDTO.FK_RestaurantId);
 
-                orderToAdd.itemsInOrder.Add(miToAdd);
+                orderToAdd.MenuItems.Add(miToAdd);
             }
 
             //Add new order
@@ -103,14 +116,14 @@ namespace RestaurantManager.Services
             var orderToUpdate = await _orderRepository.GetOrderAsync(orderDTO.Id);
 
             //clear list of menuitems
-            orderToUpdate.itemsInOrder.Clear();
+            orderToUpdate.MenuItems.Clear();
 
             //add menuitems from orderdto to ordertoupdate.
             foreach (MenuItemGetDTO mi in orderDTO.itemsInOrder)
             {
                 var miToAdd = await _menuRepository.GetMenuItemAsync(mi.Id, orderDTO.FK_RestaurantId);
 
-                orderToUpdate.itemsInOrder.Add(miToAdd);
+                orderToUpdate.MenuItems.Add(miToAdd);
             }
 
             //UpdateOrder

@@ -29,7 +29,11 @@ namespace RestaurantManager.Services
                     Id = m.Id,
                     Name = m.Name,
                     Category = m.Category,
-                    Description = m.Description
+                    Description = m.Description,
+                    FK_MenuId = m.FK_MenuId,
+                    FK_RestaurantId = m.FK_RestaurantId,
+                    IsAvaliable = m.isAvaliable,
+                    AmountAvaliable = m.AmountAvaliable                    
                 }).ToList()
             }).ToList();
 
@@ -56,6 +60,9 @@ namespace RestaurantManager.Services
                     Name = m.Name,
                     Category = m.Category,
                     Description = m.Description,
+                    FK_MenuId = m.FK_MenuId,
+                    FK_RestaurantId = m.FK_RestaurantId,
+                    IsAvaliable = m.isAvaliable,
                     AmountAvaliable = m.AmountAvaliable
                 }).ToList() ?? new List<MenuItemGetDTO>()
             } ?? new MenuGetDTO { };
@@ -133,6 +140,8 @@ namespace RestaurantManager.Services
                 Name = menuItem.Name,
                 Description = menuItem.Description,
                 Category = menuItem.Category,
+                FK_MenuId = menuId,
+                FK_RestaurantId = restaurantId,
                 AmountAvaliable = menuItem.AmountAvaliable,
                 isAvaliable = false
             };

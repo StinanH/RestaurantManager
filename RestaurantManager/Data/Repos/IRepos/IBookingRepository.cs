@@ -10,7 +10,7 @@ namespace RestaurantManager.Data.Repos.IRepos
         Task AddBookingAsync(Booking booking);
         Task UpdateBookingAsync(Booking booking);
         Task DeleteBookingAsync(Booking booking);
-        Task<bool> IsBookingAvaliable(Booking booking);
+        Task<IEnumerable<Table>> IsBookingAvaliable(Booking booking);
 
     }
 }

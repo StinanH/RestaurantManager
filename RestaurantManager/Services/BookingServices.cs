@@ -4,7 +4,9 @@ using RestaurantManager.Data.Repos.IRepos;
 using RestaurantManager.Models;
 using RestaurantManager.Models.DTOs.BookingDTOs;
 using RestaurantManager.Models.DTOs.RestaurantDTOs;
+using RestaurantManager.Models.DTOs.TableDTOs;
 using RestaurantManager.Models.DTOs.UserDTOs;
+using RestaurantManager.Models.DTOs.TimeSlotDTOs;
 using RestaurantManager.Services.IServices;
 
 namespace RestaurantManager.Services
@@ -41,6 +43,7 @@ namespace RestaurantManager.Services
                 {
                     Name = b.Restaurant.Name,
                     Address = b.Restaurant.Address,
+                    Email = b.Restaurant.Email,
                     PhoneNumber = b.Restaurant.PhoneNumber,
                     Description = b.Restaurant.Description
                 },
@@ -51,7 +54,14 @@ namespace RestaurantManager.Services
                     Email = b.User.Email,
                     PhoneNumber= b.User.PhoneNumber
                 },
-                TableId = b.FK_TableId
+                TableId = b.FK_TableId,
+                Timeslot = new TimeslotGetDTO
+                {
+                    Id = b.Timeslot.Id,
+                    StartTime = b.requestedTime,
+                    EndTime = b.requestedTime.AddHours(2),
+                    isAvaliable = b.Timeslot.isAvaliable
+                }
             }).ToList();
 
             return bookingsList;
@@ -70,6 +80,7 @@ namespace RestaurantManager.Services
                 {
                     Name = b.Restaurant.Name,
                     Address = b.Restaurant.Address,
+                    Email = b.Restaurant.Email,
                     PhoneNumber = b.Restaurant.PhoneNumber,
                     Description = b.Restaurant.Description
                 },
@@ -80,7 +91,14 @@ namespace RestaurantManager.Services
                     Email = b.User.Email,
                     PhoneNumber = b.User.PhoneNumber
                 },
-                TableId = b.FK_TableId
+                TableId = b.FK_TableId,
+                Timeslot = new TimeslotGetDTO
+                {
+                    Id = b.Timeslot.Id,
+                    StartTime = b.requestedTime,
+                    EndTime = b.requestedTime.AddHours(2),
+                    isAvaliable = b.Timeslot.isAvaliable
+                }
             }).ToList();
 
             return bookingsList;
@@ -100,26 +118,36 @@ namespace RestaurantManager.Services
                 RestaurantId = bookingById.FK_RestaurantId,
                 Restaurant = new RestaurantGetDTO
                 {
+                    Id = bookingById.Restaurant.Id,
                     Name = bookingById.Restaurant.Name,
                     Address = bookingById.Restaurant.Address,
+                    Email = bookingById.Restaurant.Email,
                     PhoneNumber = bookingById.Restaurant.PhoneNumber,
                     Description = bookingById.Restaurant.Description
                 },
                 UserId = bookingById.FK_UserID,
                 User = new UserGetDTO
                 {
+                    Id = bookingById.User.Id,
                     Name = bookingById.User.Name,
                     Email = bookingById.User.Email,
                     PhoneNumber = bookingById.User.PhoneNumber
                 },
-                TableId = bookingById.FK_TableId
+                TableId = bookingById.FK_TableId,
+                Timeslot = new TimeslotGetDTO
+                {
+                    Id = bookingById.Timeslot.Id,
+                    StartTime = bookingById.requestedTime,
+                    EndTime = bookingById.requestedTime.AddHours(2),
+                    isAvaliable = bookingById.Timeslot.isAvaliable
+                }                
             };
 
             return booking;
 
         }
 
-        public async Task<bool> IsBookingAvaliable(BookingCreateDTO bookingDTO)
+        public async Task<IEnumerable<TableGetDTO>> IsBookingAvaliable(BookingCreateDTO bookingDTO)
         {
             DateTime endtime = bookingDTO.requestedTime.AddHours(2);
 
@@ -133,17 +161,24 @@ namespace RestaurantManager.Services
                 FK_RestaurantId = bookingDTO.RestaurantId
             };
 
-            var isAvaliable = await _bookingRepository.IsBookingAvaliable(bookingToCheckIfAvaliable);
+            var AvaliableTables = await _bookingRepository.IsBookingAvaliable(bookingToCheckIfAvaliable);
 
-            return isAvaliable;
+            var tableDtos = AvaliableTables
+                .Select(t => new TableGetDTO
+                {
+                    Id = t.Id,
+                    NrOfSeats = t.NrOfSeats
+                }).ToList() ?? new List<TableGetDTO>();
+
+            return tableDtos;
         }
 
         //return bool on these 3 to report success?
-        public async Task AddBookingAsync(BookingCreateDTO bookingDTO)
+        public async Task<bool> AddBookingAsync(BookingCreateDTO bookingDTO)
         {   
-            var bookingIsAvaliable = await IsBookingAvaliable(bookingDTO);
+            var avaliabletables = await IsBookingAvaliable(bookingDTO);
 
-            if (bookingIsAvaliable)
+            if (avaliabletables.Count() > 0)
             {
                 var restaurant = await _restaurantRepository.GetRestaurantAsync(bookingDTO.RestaurantId);
 
@@ -186,11 +221,12 @@ namespace RestaurantManager.Services
 
                 await _bookingRepository.UpdateBookingAsync(bookingToAdd);
 
+                return true;
             }
 
             else
             {
-                Results.NotFound("Booking not avaliable");
+                return false;
             }
         }
         public async Task UpdateBookingAsync(BookingUpdateDTO bookingDTO)

@@ -19,9 +19,16 @@ namespace RestaurantManager.Controllers
         [Route("create")]
         public async Task<IActionResult> CreateBooking(BookingCreateDTO bookingDTO)
         {
-            await _bookingServices.AddBookingAsync(bookingDTO);
+            var successful = await _bookingServices.AddBookingAsync(bookingDTO);
 
-            return Ok();
+            if (successful)
+            {
+                return Ok("Booking created");
+            }
+            else
+            {
+                return NotFound("Booking unsuccessful, no avaliable tables at that time");
+            }
         }
 
         [HttpGet]
@@ -45,18 +52,23 @@ namespace RestaurantManager.Controllers
         [Route("{restaurantId:int}/all_bookings")]
         public async Task<IActionResult> GetAllBookingAtRestaurant(int restaurantId)
         {
-            await _bookingServices.GetAllBookingsByRestaurantIdAsync(restaurantId);
+            var bookingslist = await _bookingServices.GetAllBookingsByRestaurantIdAsync(restaurantId);
 
-            return Ok();
+            return Ok(bookingslist);
         }
 
         [HttpGet]
         [Route("{bookingId:int}")]
         public async Task<IActionResult> GetBooking(int bookingId)
         {
-            await _bookingServices.GetBookingAsync(bookingId);
+            var booking = await _bookingServices.GetBookingAsync(bookingId);
 
-            return Ok();
+            if (booking == null)
+            {
+                return NotFound("Booking not found");
+            }
+
+            return Ok(booking);
         }
 
         [HttpPut]
@@ -65,16 +77,16 @@ namespace RestaurantManager.Controllers
         {
             await _bookingServices.UpdateBookingAsync(bookingDTO);
 
-            return Ok();
+            return Ok("booking id :" +bookingId +"update");
         }
 
         [HttpDelete]
         [Route("{bookingId:int}")]
         public async Task<IActionResult> DeleteBooking(int bookingId)
         {
-            await _bookingServices.DeleteBookingAsync(bookingId);
+            await _bookingServices.DeleteBookingAsync(bookingId);          
 
-            return Ok();
+            return Ok("Booking with id:" +bookingId +" deleted.");
         }
     }
 }

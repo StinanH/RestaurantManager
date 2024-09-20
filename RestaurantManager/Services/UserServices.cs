@@ -22,7 +22,8 @@ namespace RestaurantManager.Services
             {
                 Id = u.Id,
                 Name = u.Name,
-                Email = u.Email
+                Email = u.Email,
+                PhoneNumber = u.PhoneNumber
             }).ToList();
 
             return userlist;
@@ -36,6 +37,7 @@ namespace RestaurantManager.Services
                 Id = userById.Id,
                 Name = userById.Name,
                 Email = userById.Email,
+                PhoneNumber = userById.PhoneNumber
             };
 
             return user;

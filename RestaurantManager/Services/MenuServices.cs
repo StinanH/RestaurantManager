@@ -65,7 +65,7 @@ namespace RestaurantManager.Services
                     IsAvaliable = m.isAvaliable,
                     AmountAvaliable = m.AmountAvaliable
                 }).ToList() ?? new List<MenuItemGetDTO>()
-            } ?? new MenuGetDTO { };
+            } ?? new MenuGetDTO { }; 
 
             return menu;
 

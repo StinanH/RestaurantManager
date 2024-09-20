@@ -70,26 +70,21 @@ namespace RestaurantManager.Services
             {
                 Id = orderById.Id,
                 FK_RestaurantId = orderById.FK_RestaurantID,
-                FK_UserId = orderById.FK_UserId
-            };
-
-            foreach (MenuItem m in orderById.MenuItems)
-            {
-                order.MenuItems.Add(new MenuItemGetDTO
+                FK_UserId = orderById.FK_UserId,
+                MenuItems = orderById.MenuItems.Select(m => new MenuItemGetDTO
                 {
                     Id = m.Id,
                     Name = m.Name,
-                    Category=m.Category,
+                    Category = m.Category,
                     Description = m.Description,
                     FK_MenuId = m.FK_MenuId,
                     FK_RestaurantId = m.FK_RestaurantId,
-                    AmountAvaliable = m.AmountAvaliable,
-                    IsAvaliable = m.isAvaliable
-                });
-            }
+                    IsAvaliable = m.isAvaliable,
+                    AmountAvaliable = m.AmountAvaliable
+                }).ToList() ?? new List<MenuItemGetDTO>()
+            };
 
             return order;
-
         }
         public async Task AddOrderAsync(OrderCreateDTO orderDTO)
         {

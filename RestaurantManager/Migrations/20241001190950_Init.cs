@@ -101,6 +101,28 @@ namespace RestaurantManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Accounts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHashed = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    isAdmin = table.Column<bool>(type: "bit", nullable: false),
+                    FK_User = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Accounts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Accounts_Users_FK_User",
+                        column: x => x.FK_User,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -267,6 +289,12 @@ namespace RestaurantManager.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Accounts_FK_User",
+                table: "Accounts",
+                column: "FK_User",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Bookings_FK_RestaurantId",
                 table: "Bookings",
                 column: "FK_RestaurantId");
@@ -325,6 +353,9 @@ namespace RestaurantManager.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Accounts");
+
             migrationBuilder.DropTable(
                 name: "Bookings");
 

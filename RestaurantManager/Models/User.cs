@@ -15,8 +15,8 @@ namespace RestaurantManager.Models
 
         [Required]
         public string Email { get; set; }
-        
-        public string PhoneNumber { get; set; }
+
+        public string? PhoneNumber { get; set; }
 
         public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 

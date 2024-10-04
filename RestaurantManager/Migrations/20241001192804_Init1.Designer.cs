@@ -12,8 +12,8 @@ using RestaurantManager.Data;
 namespace RestaurantManager.Migrations
 {
     [DbContext(typeof(RestaurantManagerContext))]
-    [Migration("20240919114001_Init")]
-    partial class Init
+    [Migration("20241001192804_Init1")]
+    partial class Init1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,36 @@ namespace RestaurantManager.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("RestaurantManager.Models.Account", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FK_User")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PasswordHashed")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isAdmin")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FK_User")
+                        .IsUnique();
+
+                    b.ToTable("Accounts");
+                });
 
             modelBuilder.Entity("RestaurantManager.Models.Booking", b =>
                 {
@@ -533,7 +563,6 @@ namespace RestaurantManager.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -569,6 +598,17 @@ namespace RestaurantManager.Migrations
                             Name = "Siri Martinsson",
                             PhoneNumber = "1111111144"
                         });
+                });
+
+            modelBuilder.Entity("RestaurantManager.Models.Account", b =>
+                {
+                    b.HasOne("RestaurantManager.Models.User", "User")
+                        .WithOne()
+                        .HasForeignKey("RestaurantManager.Models.Account", "FK_User")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("RestaurantManager.Models.Booking", b =>

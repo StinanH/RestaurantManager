@@ -11,6 +11,8 @@ namespace RestaurantManager.Data
         }
 
         //Dbsets
+
+        public DbSet<Account> Accounts { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Menu> Menus { get; set; }
@@ -76,6 +78,11 @@ namespace RestaurantManager.Data
             modelBuilder.Entity<Order>()
                 .HasMany(o => o.MenuItems)
                 .WithOne()   
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Account>()
+                .HasOne(a => a.User)
+                .WithOne()
                 .OnDelete(DeleteBehavior.Restrict);
                 
 

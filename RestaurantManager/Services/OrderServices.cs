@@ -51,8 +51,10 @@ namespace RestaurantManager.Services
                     Description = o.Description,
                     FK_MenuId = o.FK_MenuId,
                     FK_RestaurantId = o.FK_RestaurantId,
-                    IsAvaliable = o.isAvaliable,
-                    AmountAvaliable = o.AmountAvaliable
+                    IsAvailable = o.IsAvailable,
+                    Price = o.Price,
+                    AmountSold = o.AmountSold
+                    
                 }).ToList()
 
                 //Add that it prints items in order.
@@ -79,8 +81,9 @@ namespace RestaurantManager.Services
                     Description = m.Description,
                     FK_MenuId = m.FK_MenuId,
                     FK_RestaurantId = m.FK_RestaurantId,
-                    IsAvaliable = m.isAvaliable,
-                    AmountAvaliable = m.AmountAvaliable
+                    IsAvailable = m.IsAvailable,
+                    Price = m.Price,
+                    AmountSold = m.AmountSold
                 }).ToList() ?? new List<MenuItemGetDTO>()
             };
 
@@ -98,7 +101,7 @@ namespace RestaurantManager.Services
             {
 
                 var miToAdd = await _menuRepository.GetMenuItemAsync(mi.Id, orderDTO.FK_RestaurantId);
-
+                miToAdd.AmountSold++;
                 orderToAdd.MenuItems.Add(miToAdd);
             }
 

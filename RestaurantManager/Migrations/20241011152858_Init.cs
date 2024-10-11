@@ -53,7 +53,7 @@ namespace RestaurantManager.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -209,8 +209,9 @@ namespace RestaurantManager.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    isAvaliable = table.Column<bool>(type: "bit", nullable: false),
-                    AmountAvaliable = table.Column<int>(type: "int", nullable: false),
+                    IsAvailable = table.Column<bool>(type: "bit", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    AmountSold = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -247,7 +248,18 @@ namespace RestaurantManager.Migrations
                     { 1, "David@gmail.com", "David Hedman", "1111111111" },
                     { 2, "Leo@gmail.com", "Leo Horrorwitz", "1111111122" },
                     { 3, "Berend@gmail.com", "Berend Mevius", "1111111133" },
-                    { 4, "Siri@gmail.com", "Siri Martinsson", "1111111144" }
+                    { 4, "Siri@gmail.com", "Siri Martinsson", "1111111144" },
+                    { 5, "Admin@gmail.com", "Adam Min", "0707070707" },
+                    { 6, "User@gmail.com", "Userella De Fault", "0737373737" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Accounts",
+                columns: new[] { "Id", "Email", "FK_User", "PasswordHashed", "isAdmin" },
+                values: new object[,]
+                {
+                    { 1, "Admin@gmail.com", 5, "$2a$11$uwRLWFky/foDrhxGCyOSwekoZLp8.ytnU2lypaODvVST2H4xOo0.a", true },
+                    { 2, "User@gmail.com", 6, "$2a$11$9xUzyEt5ZyUMfAXA/83AOeW4vZL3nPDLWFUta2P031LLq8urLvxvC", false }
                 });
 
             migrationBuilder.InsertData(
@@ -256,36 +268,37 @@ namespace RestaurantManager.Migrations
                 values: new object[,]
                 {
                     { 1, 1, "Meny" },
-                    { 2, 1, "Lunchmeny" },
-                    { 3, 2, "Meny" },
-                    { 4, 2, "Helgmeny" }
+                    { 2, 2, "Meny" },
+                    { 3, 2, "Helgmeny" }
                 });
 
             migrationBuilder.InsertData(
                 table: "MenuItems",
-                columns: new[] { "Id", "AmountAvaliable", "Category", "Description", "FK_MenuId", "FK_RestaurantId", "Name", "OrderId", "isAvaliable" },
+                columns: new[] { "Id", "AmountSold", "Category", "Description", "FK_MenuId", "FK_RestaurantId", "IsAvailable", "Name", "OrderId", "Price" },
                 values: new object[,]
                 {
-                    { 1, 100, "Pizza", "En sorts pizza.", 1, 1, "Ananaspizza", null, true },
-                    { 2, 100, "Pizza", "En annan pizza.", 1, 1, "Bananpizza", null, true },
-                    { 3, 100, "Pizza", "Också pizza.", 1, 1, "Bönpizza", null, true },
-                    { 4, 100, "Pizza", "En Rund pizza.", 1, 1, "Pastapizza", null, true },
-                    { 5, 100, "Dryck", "Lärre.", 1, 1, "Cuba cola", null, true },
-                    { 6, 100, "Pasta", "Pasta med pålägg", 2, 1, "Pastasallad med banan", null, true },
-                    { 7, 100, "Pasta", "Pasta med annat pålägg", 2, 1, "Pastasallad med mint", null, true },
-                    { 8, 100, "Pasta", "Pasta med oätligt pålägg", 2, 1, "Pastasallad med lakrits", null, true },
-                    { 9, 100, "Pizza", "Pizza med champinjoner", 2, 1, "Capritjosan", null, true },
-                    { 10, 100, "Pizza", "Pizza utan champinjoner", 2, 1, "Margareta", null, true },
-                    { 11, 100, "Bakelser", "Snurrigt bakverk", 3, 2, "Bulle", null, true },
-                    { 12, 100, "Bakelser", "Fyrkantigt bakverk", 3, 2, "Kärleksrutor", null, true },
-                    { 13, 100, "Bakelser", "Sfäriskt bakverk", 3, 2, "Chokladboll", null, true },
-                    { 14, 100, "Dryck", "Brun dryck", 3, 2, "Kaffe", null, true },
-                    { 15, 100, "Dryck", "Halvgenomskinlig dryck", 3, 2, "Té", null, true },
-                    { 16, 100, "Bakelser", "Snurrigt bakverk", 4, 2, "Bulle", null, true },
-                    { 17, 100, "Bakelser", "Rosa bakverk", 4, 2, "Hallonpaj med grädde", null, true },
-                    { 18, 100, "Bakelser", "det är paj", 4, 2, "Blåbärspaj med grädde", null, true },
-                    { 19, 100, "Dryck", "Brun dryck", 3, 2, "Kaffe", null, true },
-                    { 20, 100, "Dryck", "Halvgenomskinlig dryck", 3, 2, "Té", null, true }
+                    { 1, 70, "Pizza", "En sorts pizza.", 1, 1, true, "Ananaspizza", null, 90 },
+                    { 2, 90, "Pizza", "En annan pizza.", 1, 1, true, "Bananpizza", null, 80 },
+                    { 3, 80, "Pizza", "Också pizza.", 1, 1, true, "Bönpizza", null, 70 },
+                    { 4, 40, "Pizza", "En Rund pizza.", 1, 1, true, "Pastapizza", null, 60 },
+                    { 5, 40, "Dryck", "Lärre.", 1, 1, true, "Cuba cola", null, 50 },
+                    { 6, 50, "Pasta", "Pasta med pålägg", 1, 1, true, "Pastasallad med banan", null, 40 },
+                    { 7, 70, "Pasta", "Pasta med annat pålägg", 1, 1, true, "Pastasallad med mint", null, 45 },
+                    { 8, 90, "Pasta", "Pasta med oätligt pålägg", 1, 1, true, "Pastasallad med lakrits", null, 45 },
+                    { 9, 50, "Pizza", "Pizza med champinjoner", 1, 1, true, "Capritjosan", null, 70 },
+                    { 10, 56, "Pizza", "Pizza utan champinjoner", 1, 1, true, "Margareta", null, 71 },
+                    { 11, 33, "Dryck", "Brun dryck", 1, 1, true, "Kaffe", null, 10 },
+                    { 12, 6, "Dryck", "Halvgenomskinlig dryck", 1, 1, true, "Té", null, 10 },
+                    { 13, 4, "Dryck", "Rosa lärre", 1, 1, true, "Hallonsoda", null, 20 },
+                    { 14, 4, "Dryck", "Gul lärre", 1, 1, true, "Lemonad", null, 20 },
+                    { 15, 30, "Dryck", "Orange lärre", 1, 1, true, "Zingo", null, 15 },
+                    { 16, 20, "Dryck", "Annan brun dryck", 1, 1, true, "Cola", null, 15 },
+                    { 17, 0, "Dryck", "Halvgenomskinlig dryck", 2, 2, true, "Té", null, 100 },
+                    { 18, 0, "Bakelser", "Snurrigt bakverk", 3, 2, true, "Bulle", null, 100 },
+                    { 19, 0, "Bakelser", "Rosa bakverk", 3, 2, true, "Hallonpaj med grädde", null, 100 },
+                    { 20, 0, "Bakelser", "det är paj", 3, 2, true, "Blåbärspaj med grädde", null, 100 },
+                    { 21, 0, "Dryck", "Brun dryck", 3, 2, true, "Kaffe", null, 100 },
+                    { 22, 0, "Dryck", "Halvgenomskinlig dryck", 3, 2, true, "Té", null, 100 }
                 });
 
             migrationBuilder.CreateIndex(

@@ -7,7 +7,7 @@ namespace RestaurantManager.Services.IServices
     public interface IRestaurantServices
     {
         Task<IEnumerable<RestaurantGetDTO>> GetAllRestaurantsAsync();
-        Task<RestaurantGetDTO> GetRestaurantAsync(int restaurantID);
+        Task<RestaurantGetDTO> GetRestaurantAsync(int restaurantID, string sortingOrder);
         Task AddRestaurantAsync(RestaurantCreateDTO restaurantDTO);
         Task UpdateRestaurantAsync(RestaurantUpdateDTO restaurantDTO);
         Task DeleteRestaurantAsync(int restaurantId);

@@ -12,8 +12,8 @@ using RestaurantManager.Data;
 namespace RestaurantManager.Migrations
 {
     [DbContext(typeof(RestaurantManagerContext))]
-    [Migration("20241001192804_Init1")]
-    partial class Init1
+    [Migration("20241011152858_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,6 +53,24 @@ namespace RestaurantManager.Migrations
                         .IsUnique();
 
                     b.ToTable("Accounts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "Admin@gmail.com",
+                            FK_User = 5,
+                            PasswordHashed = "$2a$11$uwRLWFky/foDrhxGCyOSwekoZLp8.ytnU2lypaODvVST2H4xOo0.a",
+                            isAdmin = true
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "User@gmail.com",
+                            FK_User = 6,
+                            PasswordHashed = "$2a$11$9xUzyEt5ZyUMfAXA/83AOeW4vZL3nPDLWFUta2P031LLq8urLvxvC",
+                            isAdmin = false
+                        });
                 });
 
             modelBuilder.Entity("RestaurantManager.Models.Booking", b =>
@@ -133,18 +151,12 @@ namespace RestaurantManager.Migrations
                         new
                         {
                             Id = 2,
-                            FK_RestaurantId = 1,
-                            Name = "Lunchmeny"
-                        },
-                        new
-                        {
-                            Id = 3,
                             FK_RestaurantId = 2,
                             Name = "Meny"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 3,
                             FK_RestaurantId = 2,
                             Name = "Helgmeny"
                         });
@@ -158,7 +170,7 @@ namespace RestaurantManager.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AmountAvaliable")
+                    b.Property<int>("AmountSold")
                         .HasColumnType("int");
 
                     b.Property<string>("Category")
@@ -175,6 +187,9 @@ namespace RestaurantManager.Migrations
                     b.Property<int>("FK_RestaurantId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -182,8 +197,8 @@ namespace RestaurantManager.Migrations
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("isAvaliable")
-                        .HasColumnType("bit");
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -197,222 +212,266 @@ namespace RestaurantManager.Migrations
                         new
                         {
                             Id = 1,
-                            AmountAvaliable = 100,
+                            AmountSold = 70,
                             Category = "Pizza",
                             Description = "En sorts pizza.",
                             FK_MenuId = 1,
                             FK_RestaurantId = 1,
+                            IsAvailable = true,
                             Name = "Ananaspizza",
-                            isAvaliable = true
+                            Price = 90
                         },
                         new
                         {
                             Id = 2,
-                            AmountAvaliable = 100,
+                            AmountSold = 90,
                             Category = "Pizza",
                             Description = "En annan pizza.",
                             FK_MenuId = 1,
                             FK_RestaurantId = 1,
+                            IsAvailable = true,
                             Name = "Bananpizza",
-                            isAvaliable = true
+                            Price = 80
                         },
                         new
                         {
                             Id = 3,
-                            AmountAvaliable = 100,
+                            AmountSold = 80,
                             Category = "Pizza",
                             Description = "Också pizza.",
                             FK_MenuId = 1,
                             FK_RestaurantId = 1,
+                            IsAvailable = true,
                             Name = "Bönpizza",
-                            isAvaliable = true
+                            Price = 70
                         },
                         new
                         {
                             Id = 4,
-                            AmountAvaliable = 100,
+                            AmountSold = 40,
                             Category = "Pizza",
                             Description = "En Rund pizza.",
                             FK_MenuId = 1,
                             FK_RestaurantId = 1,
+                            IsAvailable = true,
                             Name = "Pastapizza",
-                            isAvaliable = true
+                            Price = 60
                         },
                         new
                         {
                             Id = 5,
-                            AmountAvaliable = 100,
+                            AmountSold = 40,
                             Category = "Dryck",
                             Description = "Lärre.",
                             FK_MenuId = 1,
                             FK_RestaurantId = 1,
+                            IsAvailable = true,
                             Name = "Cuba cola",
-                            isAvaliable = true
+                            Price = 50
                         },
                         new
                         {
                             Id = 6,
-                            AmountAvaliable = 100,
+                            AmountSold = 50,
                             Category = "Pasta",
                             Description = "Pasta med pålägg",
-                            FK_MenuId = 2,
+                            FK_MenuId = 1,
                             FK_RestaurantId = 1,
+                            IsAvailable = true,
                             Name = "Pastasallad med banan",
-                            isAvaliable = true
+                            Price = 40
                         },
                         new
                         {
                             Id = 7,
-                            AmountAvaliable = 100,
+                            AmountSold = 70,
                             Category = "Pasta",
                             Description = "Pasta med annat pålägg",
-                            FK_MenuId = 2,
+                            FK_MenuId = 1,
                             FK_RestaurantId = 1,
+                            IsAvailable = true,
                             Name = "Pastasallad med mint",
-                            isAvaliable = true
+                            Price = 45
                         },
                         new
                         {
                             Id = 8,
-                            AmountAvaliable = 100,
+                            AmountSold = 90,
                             Category = "Pasta",
                             Description = "Pasta med oätligt pålägg",
-                            FK_MenuId = 2,
+                            FK_MenuId = 1,
                             FK_RestaurantId = 1,
+                            IsAvailable = true,
                             Name = "Pastasallad med lakrits",
-                            isAvaliable = true
+                            Price = 45
                         },
                         new
                         {
                             Id = 9,
-                            AmountAvaliable = 100,
+                            AmountSold = 50,
                             Category = "Pizza",
                             Description = "Pizza med champinjoner",
-                            FK_MenuId = 2,
+                            FK_MenuId = 1,
                             FK_RestaurantId = 1,
+                            IsAvailable = true,
                             Name = "Capritjosan",
-                            isAvaliable = true
+                            Price = 70
                         },
                         new
                         {
                             Id = 10,
-                            AmountAvaliable = 100,
+                            AmountSold = 56,
                             Category = "Pizza",
                             Description = "Pizza utan champinjoner",
-                            FK_MenuId = 2,
+                            FK_MenuId = 1,
                             FK_RestaurantId = 1,
+                            IsAvailable = true,
                             Name = "Margareta",
-                            isAvaliable = true
+                            Price = 71
                         },
                         new
                         {
                             Id = 11,
-                            AmountAvaliable = 100,
-                            Category = "Bakelser",
-                            Description = "Snurrigt bakverk",
-                            FK_MenuId = 3,
-                            FK_RestaurantId = 2,
-                            Name = "Bulle",
-                            isAvaliable = true
+                            AmountSold = 33,
+                            Category = "Dryck",
+                            Description = "Brun dryck",
+                            FK_MenuId = 1,
+                            FK_RestaurantId = 1,
+                            IsAvailable = true,
+                            Name = "Kaffe",
+                            Price = 10
                         },
                         new
                         {
                             Id = 12,
-                            AmountAvaliable = 100,
-                            Category = "Bakelser",
-                            Description = "Fyrkantigt bakverk",
-                            FK_MenuId = 3,
-                            FK_RestaurantId = 2,
-                            Name = "Kärleksrutor",
-                            isAvaliable = true
+                            AmountSold = 6,
+                            Category = "Dryck",
+                            Description = "Halvgenomskinlig dryck",
+                            FK_MenuId = 1,
+                            FK_RestaurantId = 1,
+                            IsAvailable = true,
+                            Name = "Té",
+                            Price = 10
                         },
                         new
                         {
                             Id = 13,
-                            AmountAvaliable = 100,
-                            Category = "Bakelser",
-                            Description = "Sfäriskt bakverk",
-                            FK_MenuId = 3,
-                            FK_RestaurantId = 2,
-                            Name = "Chokladboll",
-                            isAvaliable = true
+                            AmountSold = 4,
+                            Category = "Dryck",
+                            Description = "Rosa lärre",
+                            FK_MenuId = 1,
+                            FK_RestaurantId = 1,
+                            IsAvailable = true,
+                            Name = "Hallonsoda",
+                            Price = 20
                         },
                         new
                         {
                             Id = 14,
-                            AmountAvaliable = 100,
+                            AmountSold = 4,
                             Category = "Dryck",
-                            Description = "Brun dryck",
-                            FK_MenuId = 3,
-                            FK_RestaurantId = 2,
-                            Name = "Kaffe",
-                            isAvaliable = true
+                            Description = "Gul lärre",
+                            FK_MenuId = 1,
+                            FK_RestaurantId = 1,
+                            IsAvailable = true,
+                            Name = "Lemonad",
+                            Price = 20
                         },
                         new
                         {
                             Id = 15,
-                            AmountAvaliable = 100,
+                            AmountSold = 30,
                             Category = "Dryck",
-                            Description = "Halvgenomskinlig dryck",
-                            FK_MenuId = 3,
-                            FK_RestaurantId = 2,
-                            Name = "Té",
-                            isAvaliable = true
+                            Description = "Orange lärre",
+                            FK_MenuId = 1,
+                            FK_RestaurantId = 1,
+                            IsAvailable = true,
+                            Name = "Zingo",
+                            Price = 15
                         },
                         new
                         {
                             Id = 16,
-                            AmountAvaliable = 100,
-                            Category = "Bakelser",
-                            Description = "Snurrigt bakverk",
-                            FK_MenuId = 4,
-                            FK_RestaurantId = 2,
-                            Name = "Bulle",
-                            isAvaliable = true
+                            AmountSold = 20,
+                            Category = "Dryck",
+                            Description = "Annan brun dryck",
+                            FK_MenuId = 1,
+                            FK_RestaurantId = 1,
+                            IsAvailable = true,
+                            Name = "Cola",
+                            Price = 15
                         },
                         new
                         {
                             Id = 17,
-                            AmountAvaliable = 100,
-                            Category = "Bakelser",
-                            Description = "Rosa bakverk",
-                            FK_MenuId = 4,
+                            AmountSold = 0,
+                            Category = "Dryck",
+                            Description = "Halvgenomskinlig dryck",
+                            FK_MenuId = 2,
                             FK_RestaurantId = 2,
-                            Name = "Hallonpaj med grädde",
-                            isAvaliable = true
+                            IsAvailable = true,
+                            Name = "Té",
+                            Price = 100
                         },
                         new
                         {
                             Id = 18,
-                            AmountAvaliable = 100,
+                            AmountSold = 0,
                             Category = "Bakelser",
-                            Description = "det är paj",
-                            FK_MenuId = 4,
+                            Description = "Snurrigt bakverk",
+                            FK_MenuId = 3,
                             FK_RestaurantId = 2,
-                            Name = "Blåbärspaj med grädde",
-                            isAvaliable = true
+                            IsAvailable = true,
+                            Name = "Bulle",
+                            Price = 100
                         },
                         new
                         {
                             Id = 19,
-                            AmountAvaliable = 100,
-                            Category = "Dryck",
-                            Description = "Brun dryck",
+                            AmountSold = 0,
+                            Category = "Bakelser",
+                            Description = "Rosa bakverk",
                             FK_MenuId = 3,
                             FK_RestaurantId = 2,
-                            Name = "Kaffe",
-                            isAvaliable = true
+                            IsAvailable = true,
+                            Name = "Hallonpaj med grädde",
+                            Price = 100
                         },
                         new
                         {
                             Id = 20,
-                            AmountAvaliable = 100,
+                            AmountSold = 0,
+                            Category = "Bakelser",
+                            Description = "det är paj",
+                            FK_MenuId = 3,
+                            FK_RestaurantId = 2,
+                            IsAvailable = true,
+                            Name = "Blåbärspaj med grädde",
+                            Price = 100
+                        },
+                        new
+                        {
+                            Id = 21,
+                            AmountSold = 0,
+                            Category = "Dryck",
+                            Description = "Brun dryck",
+                            FK_MenuId = 3,
+                            FK_RestaurantId = 2,
+                            IsAvailable = true,
+                            Name = "Kaffe",
+                            Price = 100
+                        },
+                        new
+                        {
+                            Id = 22,
+                            AmountSold = 0,
                             Category = "Dryck",
                             Description = "Halvgenomskinlig dryck",
                             FK_MenuId = 3,
                             FK_RestaurantId = 2,
+                            IsAvailable = true,
                             Name = "Té",
-                            isAvaliable = true
+                            Price = 100
                         });
                 });
 
@@ -597,6 +656,20 @@ namespace RestaurantManager.Migrations
                             Email = "Siri@gmail.com",
                             Name = "Siri Martinsson",
                             PhoneNumber = "1111111144"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Email = "Admin@gmail.com",
+                            Name = "Adam Min",
+                            PhoneNumber = "0707070707"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Email = "User@gmail.com",
+                            Name = "Userella De Fault",
+                            PhoneNumber = "0737373737"
                         });
                 });
 

@@ -36,9 +36,9 @@ namespace RestaurantManager.Controllers
 
         [HttpGet]
         [Route("{restaurantId:int}")]
-        public async Task<IActionResult> GetRestaurant(int restaurantId)
+        public async Task<IActionResult> GetRestaurant(int restaurantId, string sortingOrder)
         {
-            var restaurant = await _restaurantServices.GetRestaurantAsync(restaurantId);
+            var restaurant = await _restaurantServices.GetRestaurantAsync(restaurantId, sortingOrder);
 
             return Ok(restaurant);
         }

@@ -31,6 +31,7 @@ namespace RestaurantManager.Services
                 {
                     Name = accountCreate.Name,
                     Email = accountCreate.Email,
+                    PhoneNumber = accountCreate.PhoneNumber
                 };
 
                 //add new user to connect to acc

@@ -1,4 +1,6 @@
-﻿namespace RestaurantManager.Models.DTOs.RestaurantDTOs
+﻿using RestaurantManager.Models.DTOs.MenuDTOs;
+
+namespace RestaurantManager.Models.DTOs.RestaurantDTOs
 {
     public class RestaurantGetDTO
     {
@@ -8,5 +10,7 @@
         public string Email { get; set; }
         public string Address { get; set; }
         public string Description { get; set; }
+
+        public ICollection<MenuGetDTO> Menus { get; set; } = new List<MenuGetDTO>();
     }
 }

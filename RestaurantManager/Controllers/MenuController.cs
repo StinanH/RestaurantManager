@@ -63,7 +63,6 @@ namespace RestaurantManager.Controllers
             return Ok("Menu Deleted");
         }
 
-        //Should take in restaurantID and menuId
         [HttpGet]
         [Route("{menuId:int}/{menuItemId:int}")]
         public async Task<IActionResult> GetMenuItemAsync(int restaurantId, int menuId, int menuItemId)
@@ -80,6 +79,16 @@ namespace RestaurantManager.Controllers
             await _menuServices.AddMenuItemAsync(restaurantId, menuId, menuItemDTO);
 
             return Ok("Menu Created");
+        }
+
+        [HttpPut]
+        [Route("{menuId:int}/{menuItemId:int}")]
+        public async Task<ActionResult> UpdateMenuItemAsync (int restaurantId, int menuId, MenuItemUpdateDTO menuItemDTO)
+        {
+            await _menuServices.UpdateMenuItemAsync(menuItemDTO, restaurantId);
+
+            return Ok("menuitem updated.");
+        
         }
 
 

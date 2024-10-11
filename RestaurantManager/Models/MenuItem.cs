@@ -27,9 +27,11 @@ namespace RestaurantManager.Models
         public string Description { get; set; }
 
         [Required]
-        public bool isAvaliable { get; set; }
+        public bool IsAvailable { get; set; }
 
-        public int AmountAvaliable { get; set; }
+        public int Price { get; set; }
+
+        public int AmountSold { get; set; }
         
     }
 }

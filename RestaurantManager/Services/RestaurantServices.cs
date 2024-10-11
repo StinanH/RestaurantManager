@@ -2,9 +2,12 @@
 using RestaurantManager.Data.Repos;
 using RestaurantManager.Data.Repos.IRepos;
 using RestaurantManager.Models;
+using RestaurantManager.Models.DTOs.MenuDTOs;
 using RestaurantManager.Models.DTOs.RestaurantDTOs;
 using RestaurantManager.Models.DTOs.TableDTOs;
+using RestaurantManager.Models.DTOs.MenuItemDTOs;
 using RestaurantManager.Services.IServices;
+using System.Runtime.CompilerServices;
 
 namespace RestaurantManager.Services
 {
@@ -35,7 +38,7 @@ namespace RestaurantManager.Services
 
             return restaurantList;
         }
-        public async Task<RestaurantGetDTO> GetRestaurantAsync(int restaurantID)
+        public async Task<RestaurantGetDTO> GetRestaurantAsync(int restaurantID, string sortingOrder)
         {
             var restaurantById = await _restaurantRepository.GetRestaurantAsync(restaurantID);
 
@@ -46,10 +49,55 @@ namespace RestaurantManager.Services
                 Description = restaurantById.Description,
                 Address = restaurantById.Address,
                 Email = restaurantById.Email,
-                PhoneNumber = restaurantById.PhoneNumber,
+                PhoneNumber = restaurantById.PhoneNumber
             };
 
-            return restaurant;
+            if (sortingOrder == "name_asc" || sortingOrder == "name_desc" || sortingOrder == "price_asc" || sortingOrder == "price_desc")
+            {
+                foreach (Menu menu in restaurantById.Menus)
+                {
+                    switch (sortingOrder)
+                    {
+                        case "name_asc":
+                            menu.MenuItems = menu.MenuItems.OrderBy(mi => mi.Name).ToList();
+                            break;
+
+                        case "name_desc":
+                            menu.MenuItems = menu.MenuItems.OrderByDescending(mi => mi.Name).ToList();
+                            break;
+
+                        case "price_asc":
+                            menu.MenuItems = menu.MenuItems.OrderBy(mi => mi.Price).ToList();
+                            break;
+
+                        case "price_desc":
+                            menu.MenuItems = menu.MenuItems.OrderByDescending(mi => mi.Price).ToList();
+                            break;
+
+                    }
+                }
+            }
+
+            restaurant.Menus = restaurantById.Menus.Select(m => new MenuGetDTO
+            {
+                Id = m.Id,
+                Name = m.Name,
+                MenuItems = m.MenuItems.Select(m => new MenuItemGetDTO
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+                    Category = m.Category,
+                    Description = m.Description,
+                    FK_MenuId = m.FK_MenuId,
+                    FK_RestaurantId = m.FK_RestaurantId,
+                    IsAvailable = m.IsAvailable,
+                    Price = m.Price,
+                    AmountSold = m.AmountSold
+                }).ToList()
+            }).ToList();
+
+         return restaurant;
+
         }
 
         //return bool on these 3 to report success?

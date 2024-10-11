@@ -24,7 +24,11 @@ namespace RestaurantManager.Data.Repos
         //Get restaurant by ID
         public async Task<Restaurant> GetRestaurantAsync(int restaurantId)
         {
-            var restaurant = await _context.Restaurants.FirstOrDefaultAsync(r => r.Id == restaurantId);
+            var restaurant = await _context.Restaurants
+                .Where(r => r.Id == restaurantId)
+                .Include(r => r.Menus)
+                .ThenInclude(r => r.MenuItems)
+                .FirstOrDefaultAsync();
 
             return restaurant;
         }

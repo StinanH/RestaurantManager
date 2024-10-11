@@ -32,8 +32,9 @@ namespace RestaurantManager.Services
                     Description = m.Description,
                     FK_MenuId = m.FK_MenuId,
                     FK_RestaurantId = m.FK_RestaurantId,
-                    IsAvaliable = m.isAvaliable,
-                    AmountAvaliable = m.AmountAvaliable                    
+                    IsAvailable = m.IsAvailable,
+                    Price = m.Price,   
+                    AmountSold = m.AmountSold
                 }).ToList()
             }).ToList();
 
@@ -62,8 +63,9 @@ namespace RestaurantManager.Services
                     Description = m.Description,
                     FK_MenuId = m.FK_MenuId,
                     FK_RestaurantId = m.FK_RestaurantId,
-                    IsAvaliable = m.isAvaliable,
-                    AmountAvaliable = m.AmountAvaliable
+                    IsAvailable = m.IsAvailable,
+                    Price = m.Price,
+                    AmountSold= m.AmountSold
                 }).ToList() ?? new List<MenuItemGetDTO>()
             } ?? new MenuGetDTO { }; 
 
@@ -120,8 +122,9 @@ namespace RestaurantManager.Services
                 Description = menuItemById.Description,
                 FK_MenuId = menuItemById.FK_MenuId,
                 FK_RestaurantId = menuItemById.FK_RestaurantId,
-                IsAvaliable = menuItemById.isAvaliable,
-                AmountAvaliable = menuItemById.AmountAvaliable
+                IsAvailable = menuItemById.IsAvailable,
+                Price = menuItemById.Price,
+                AmountSold = menuItemById.AmountSold
             };
 
             return menuItem;
@@ -142,8 +145,10 @@ namespace RestaurantManager.Services
                 Category = menuItem.Category,
                 FK_MenuId = menuId,
                 FK_RestaurantId = restaurantId,
-                AmountAvaliable = menuItem.AmountAvaliable,
-                isAvaliable = false
+                Price = menuItem.Price,
+                IsAvailable = false,
+                AmountSold = 0
+
             };
 
             await _menuRepository.AddMenuItemAsync(menuItemToAdd, restaurantId);
@@ -157,8 +162,9 @@ namespace RestaurantManager.Services
             menuItemToUpdate.Name = menuItem.Name;
             menuItemToUpdate.Description = menuItem.Description;
             menuItemToUpdate.Category = menuItem.Category;
-            menuItemToUpdate.AmountAvaliable = menuItem.AmountAvaliable;
-        
+            menuItemToUpdate.Price = menuItem.Price;
+            menuItemToUpdate.IsAvailable = menuItem.IsAvailable;
+
             await _menuRepository.UpdateMenuItemAsync(menuItemToUpdate);
         }
         public async Task DeleteMenuItemAsync(int menuItemId, int restaurantId)

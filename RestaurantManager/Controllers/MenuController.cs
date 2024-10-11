@@ -91,6 +91,15 @@ namespace RestaurantManager.Controllers
         
         }
 
+        [HttpDelete]
+        [Route("{menuId:int}/{menuItemId:int}")]
+        public async Task<IActionResult> DeleteMenuItemAsync(int menuItemId, int menuId, int restaurantId)
+        {
+            await _menuServices.DeleteMenuItemAsync(menuItemId, restaurantId);
+
+            return Ok("MenuItem Deleted");
+        }
+
 
     }
 }

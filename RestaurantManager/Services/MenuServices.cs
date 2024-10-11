@@ -170,7 +170,7 @@ namespace RestaurantManager.Services
         public async Task DeleteMenuItemAsync(int menuItemId, int restaurantId)
         {
             MenuItem menuItemById = await _menuRepository.GetMenuItemAsync(menuItemId, restaurantId);
-
+            
             await _menuRepository.DeleteMenuItemAsync(menuItemById);
         }
     }

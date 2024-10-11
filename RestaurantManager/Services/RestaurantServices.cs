@@ -52,7 +52,7 @@ namespace RestaurantManager.Services
                 PhoneNumber = restaurantById.PhoneNumber
             };
 
-            if (sortingOrder == "name_asc" || sortingOrder == "name_desc" || sortingOrder == "price_asc" || sortingOrder == "price_desc")
+            if (sortingOrder == "name_asc" || sortingOrder == "name_desc" || sortingOrder == "price_asc" || sortingOrder == "price_desc" || sortingOrder == "popularity_desc")
             {
                 foreach (Menu menu in restaurantById.Menus)
                 {
@@ -72,6 +72,10 @@ namespace RestaurantManager.Services
 
                         case "price_desc":
                             menu.MenuItems = menu.MenuItems.OrderByDescending(mi => mi.Price).ToList();
+                            break;
+
+                        case "popularity_desc":
+                            menu.MenuItems = menu.MenuItems.OrderByDescending(mi => mi.AmountSold).ToList();
                             break;
 
                     }

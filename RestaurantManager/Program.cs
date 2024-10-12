@@ -20,6 +20,28 @@ builder.Services.AddDbContext<RestaurantManagerContext>(options =>
 // Controllers
 builder.Services.AddControllers();
 
+//CORS-Policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("LocalReact", policy =>
+    {
+        //lägg in localhost reactapp som kör när vi startar react. 
+        policy.WithOrigins("http://localhost:5173/")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
+
+//Policy som är mindre säker och tillåter vem som helst att ansluta. Om god säkerhet finns i api med auth, så kan den här användas.
+//builder.Services.AddCors(options =>
+//{
+//    options.AddDefaultPolicy(policy =>
+//    {
+//        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+//    });
+//});
+
 // Swagger/OpenAPI (info at https://aka.ms/aspnetcore/swashbuckle)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -66,6 +88,10 @@ builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAccountServices, AccountServices>();
 
 var app = builder.Build();
+
+// Use corspolicy set above ^.
+app.UseCors("LocalReact");
+
 app.UseAuthentication();
 app.UseAuthorization();
 

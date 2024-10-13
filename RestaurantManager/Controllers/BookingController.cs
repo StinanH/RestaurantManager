@@ -19,6 +19,7 @@ namespace RestaurantManager.Controllers
         [Route("create")]
         public async Task<IActionResult> CreateBooking(BookingCreateDTO bookingDTO)
         {
+            Console.WriteLine("trying to create booking on date.");
             var successful = await _bookingServices.AddBookingAsync(bookingDTO);
 
             if (successful)
@@ -29,6 +30,25 @@ namespace RestaurantManager.Controllers
             {
                 return NotFound("Booking unsuccessful, no avaliable tables at that time");
             }
+        }
+
+        [HttpGet]
+        [Route("/{restaurantId:int}/{numberOfPeople:int}/{date:datetime}")]
+        public async Task<IActionResult> GetAvaliableBookingsOnDayAsync(int restaurantId, int numberOfPeople, DateTime date)
+        {
+            Console.WriteLine("getting avaliable bookings on date.");
+
+            var avaliablebookings = await _bookingServices.GetAvaliableBookingsOnDayAsync(restaurantId, numberOfPeople, date);
+
+            foreach (BookingCreateDTO booking in avaliablebookings)
+            {
+                Console.WriteLine("booking avalible at time : " + booking.requestedTime);
+            }
+
+            
+
+            return Ok(avaliablebookings);
+        
         }
 
         [HttpGet]

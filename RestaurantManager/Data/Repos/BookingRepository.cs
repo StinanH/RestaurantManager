@@ -2,6 +2,8 @@
 using Microsoft.Identity.Client;
 using RestaurantManager.Data.Repos.IRepos;
 using RestaurantManager.Models;
+using RestaurantManager.Models.DTOs.BookingDTOs;
+using System.Diagnostics.Eventing.Reader;
 using System.Runtime.InteropServices;
 
 namespace RestaurantManager.Data.Repos
@@ -54,7 +56,101 @@ namespace RestaurantManager.Data.Repos
             return booking;
         }
 
-        //should return a list of avaliable tables.
+        public async Task<IEnumerable<BookingCreateDTO>> GetAvaliableBookingsOnDayAsync(int restaurantId,int numberOfPeople, DateTime date)
+        {
+            int openingHour = 10;
+            int closingHour = 22;
+
+            List<BookingCreateDTO>possibleBookingDTOs = new List<BookingCreateDTO>();
+
+            //getting all bookings at restaurant
+            var BookingsAtRestaurant = await _context.Bookings
+            .Where(b => b.Restaurant.Id == 1)
+            .Include(b => b.Table)
+            .ToListAsync();
+
+            var TablesAtRestaurant = await _context.Tables
+            .Where(t => t.FK_RestaurantId == 1)
+            .OrderBy(t => t.NrOfSeats)
+            .ToListAsync();
+
+            for (int hour = openingHour; hour <= closingHour - 2; hour++)
+            {
+                DateTime slotStarttime = new DateTime(
+                    date.Year, date.Month, date.Day, hour, 0, 0);
+
+                DateTime slotEndtime = new DateTime(
+                    date.Year, date.Month, date.Day, hour+2, 0, 0);
+                
+                var BookingsAtTime = BookingsAtRestaurant
+                    .Where(b => b.Timeslot.StartTime <= slotStarttime && b.Timeslot.EndTime >= slotEndtime)
+                    .ToList() ?? new List<Booking>();
+
+                var possibleTables = TablesAtRestaurant
+                    .ToList() ?? new List<Table>();
+
+                if (BookingsAtTime.Count >= TablesAtRestaurant.Count)
+                {
+                    possibleBookingDTOs = new List<BookingCreateDTO>();
+                    return possibleBookingDTOs;
+                }
+
+                else
+                {
+                    
+                    for (int i = possibleTables.Count-1 ; i >= 0; i--)
+                    {
+                        foreach (Booking booking in BookingsAtTime)
+                        {
+
+                            if (booking.FK_TableId == possibleTables[i].Id)
+                            {
+                                possibleTables.RemoveAt(i);
+                            }
+
+
+                        }
+
+                        if (possibleTables[i].NrOfSeats < numberOfPeople)
+                            {
+                                possibleTables.RemoveAt(i);
+
+                            }
+                        if (possibleTables.Count == 0)
+                            {
+
+                                return possibleBookingDTOs;
+                            }
+                    }
+
+                    if (possibleTables.Count == 0)
+                    {
+
+                        return possibleBookingDTOs;
+                    }
+
+                    else
+                    {
+                        possibleBookingDTOs.Add(new BookingCreateDTO
+                        {
+                            RestaurantId = restaurantId,
+                            requestedTime = slotStarttime,
+                            UserId = 6,
+                            NrOfPeople = numberOfPeople,
+                            Requests = ""
+                        });
+                    }
+                }             
+            }
+
+            return possibleBookingDTOs;
+        }
+
+
+
+
+
+        //should return a list of avaliable tables
         public async Task<IEnumerable<Table>> IsBookingAvaliable(Booking booking)
         {
             var BookingsAtThatTimeList = await _context.Bookings
@@ -64,7 +160,7 @@ namespace RestaurantManager.Data.Repos
 
             var TablesAtRestaurant = await _context.Tables
                 .Where(t => t.FK_RestaurantId == booking.FK_RestaurantId)
-                .OrderByDescending(t => t.NrOfSeats)
+                .OrderBy(t => t.NrOfSeats)
                 .ToListAsync();
 
             if (BookingsAtThatTimeList.Count >= TablesAtRestaurant.Count)
@@ -89,6 +185,7 @@ namespace RestaurantManager.Data.Repos
         //make task a bool
         public async Task AddBookingAsync(Booking booking)
         {
+            Console.WriteLine("omg it's adding booking.");
             var avaliableTables = await IsBookingAvaliable(booking);
 
             if (avaliableTables.Count() == 0)

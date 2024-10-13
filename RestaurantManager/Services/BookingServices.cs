@@ -28,6 +28,14 @@ namespace RestaurantManager.Services
             _timeslotRepository = timeslotRepository;
         }
 
+        public async Task<IEnumerable<BookingCreateDTO>> GetAvaliableBookingsOnDayAsync(int restaurantId, int numberOfPeople, DateTime date)
+        {
+
+            var listOfTimeslots = await _bookingRepository.GetAvaliableBookingsOnDayAsync(restaurantId, numberOfPeople, date);
+
+            return listOfTimeslots;
+        }
+
         public async Task<IEnumerable<BookingGetDTO>> GetAllBookingsAsync()
         {
             var allBookings = await _bookingRepository.GetAllBookingsAsync();
@@ -63,6 +71,7 @@ namespace RestaurantManager.Services
                     isAvaliable = b.Timeslot.isAvaliable
                 }
             }).ToList();
+
 
             return bookingsList;
         }
@@ -190,6 +199,7 @@ namespace RestaurantManager.Services
 
 
                 DateTime endtime = bookingDTO.requestedTime.AddHours(2);
+
                 //check if any of the required fields are empty (DTO.name), if so return false.
                 Booking bookingToAdd = new Booking
                 {

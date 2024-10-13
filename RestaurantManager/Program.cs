@@ -26,7 +26,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("LocalReact", policy =>
     {
         //lägg in localhost reactapp som kör när vi startar react. 
-        policy.WithOrigins("http://localhost:5173/")
+        policy.WithOrigins("http://localhost:5174")
         .AllowAnyHeader()
         .AllowAnyMethod();
     });

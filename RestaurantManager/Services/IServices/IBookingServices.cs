@@ -8,6 +8,7 @@ namespace RestaurantManager.Services.IServices
     {
         Task<IEnumerable<BookingGetDTO>> GetAllBookingsAsync();
         Task<IEnumerable<BookingGetDTO>> GetAllBookingsByRestaurantIdAsync(int restaurantId);
+        Task<IEnumerable<BookingCreateDTO>> GetAvaliableBookingsOnDayAsync(int restaurantId, int numberOfPeople, DateTime date);
         Task<BookingGetDTO> GetBookingAsync(int bookingID);
         Task <bool>AddBookingAsync(BookingCreateDTO bookingDTO);
         Task UpdateBookingAsync(BookingUpdateDTO bookingDTO);

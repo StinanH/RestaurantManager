@@ -241,6 +241,16 @@ namespace RestaurantManager.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Tables",
+                columns: new[] { "Id", "FK_RestaurantId", "NrOfSeats", "RestaurantId" },
+                values: new object[,]
+                {
+                    { 1, 1, 2, null },
+                    { 2, 1, 4, null },
+                    { 3, 1, 6, null }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Email", "Name", "PhoneNumber" },
                 values: new object[,]
@@ -258,8 +268,8 @@ namespace RestaurantManager.Migrations
                 columns: new[] { "Id", "Email", "FK_User", "PasswordHashed", "isAdmin" },
                 values: new object[,]
                 {
-                    { 1, "Admin@gmail.com", 5, "$2a$11$uwRLWFky/foDrhxGCyOSwekoZLp8.ytnU2lypaODvVST2H4xOo0.a", true },
-                    { 2, "User@gmail.com", 6, "$2a$11$9xUzyEt5ZyUMfAXA/83AOeW4vZL3nPDLWFUta2P031LLq8urLvxvC", false }
+                    { 1, "Admin@gmail.com", 5, "$2a$11$X0RBosrovnEc7FC.HY7xEOQsRk9sfRSFmXPgQ5VwXdQftTeInjUP2", true },
+                    { 2, "User@gmail.com", 6, "$2a$11$HMwmz4mUOj5Ci5eykZ9w2.WeDE/k90raYtMFROd7aCmTY18HiuH2K", false }
                 });
 
             migrationBuilder.InsertData(

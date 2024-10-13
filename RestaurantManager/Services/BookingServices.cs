@@ -156,9 +156,11 @@ namespace RestaurantManager.Services
 
         }
 
-        public async Task<IEnumerable<TableGetDTO>> IsBookingAvaliable(BookingCreateDTO bookingDTO)
+        public async Task<TableGetDTO> IsBookingAvaliable(BookingCreateDTO bookingDTO)
         {
+            DateTime startTime = bookingDTO.requestedTime;
             DateTime endtime = bookingDTO.requestedTime.AddHours(2);
+            TimeSlot newTimeslot = new TimeSlot { StartTime = startTime, EndTime = endtime };
 
             var bookingToCheckIfAvaliable = new Booking
             {
@@ -167,27 +169,30 @@ namespace RestaurantManager.Services
                 requestedEndTime = endtime,
                 Requests = bookingDTO.Requests,
                 FK_UserID = bookingDTO.UserId,
-                FK_RestaurantId = bookingDTO.RestaurantId
+                FK_RestaurantId = bookingDTO.RestaurantId,
+                Timeslot = newTimeslot
             };
 
-            var AvaliableTables = await _bookingRepository.IsBookingAvaliable(bookingToCheckIfAvaliable);
+            var AvaliableTable = await _bookingRepository.IsBookingAvaliable(bookingToCheckIfAvaliable);
 
-            var tableDtos = AvaliableTables
-                .Select(t => new TableGetDTO
-                {
-                    Id = t.Id,
-                    NrOfSeats = t.NrOfSeats
-                }).ToList() ?? new List<TableGetDTO>();
+            var tableToGetDto = new TableGetDTO
+            {
+                Id = AvaliableTable.Id,
+                RestaurantId=AvaliableTable.FK_RestaurantId,
+                NrOfSeats = AvaliableTable.NrOfSeats
+            };
 
-            return tableDtos;
+
+            //returns the first avaliable table with least nr of seats to meet requirement
+            return tableToGetDto;
         }
 
         //return bool on these 3 to report success?
         public async Task<bool> AddBookingAsync(BookingCreateDTO bookingDTO)
         {   
-            var avaliabletables = await IsBookingAvaliable(bookingDTO);
+            var avaliabletable = await IsBookingAvaliable(bookingDTO);
 
-            if (avaliabletables.Count() > 0)
+            if (avaliabletable.Id >= 0)
             {
                 var restaurant = await _restaurantRepository.GetRestaurantAsync(bookingDTO.RestaurantId);
 
@@ -197,35 +202,30 @@ namespace RestaurantManager.Services
 
                 // check if user is null.
 
-
-                DateTime endtime = bookingDTO.requestedTime.AddHours(2);
-
                 //check if any of the required fields are empty (DTO.name), if so return false.
+
+                DateTime startTime = bookingDTO.requestedTime;
+                DateTime endtime = bookingDTO.requestedTime.AddHours(2);
+                TimeSlot newTimeslot = new TimeSlot {
+                    StartTime = startTime,
+                    EndTime = endtime };
+
+                await _timeslotRepository.AddTimeSlotAsync(newTimeslot);
+
                 Booking bookingToAdd = new Booking
                 {
                     NrOfPeople = bookingDTO.NrOfPeople,
                     Requests = bookingDTO.Requests,
                     FK_RestaurantId = bookingDTO.RestaurantId,
                     FK_UserID = bookingDTO.UserId,
-                    FK_TableId = await _tableRepository.GetAvaliableTableId(bookingDTO)
+                    FK_TableId = avaliabletable.Id,
+                    FK_TimeslotId = newTimeslot.Id
                 };
 
                 //create timeslot
                 //later timeslots can be used to set avaliable slots during open hours. atm i am not generating timeslots.
 
-                var timeslotToAdd = new TimeSlot
-                {
-                    StartTime = bookingToAdd.requestedTime,
-                    EndTime = endtime,
-                    isAvaliable = false
-                };
-
-                await _timeslotRepository.AddTimeSlotAsync(timeslotToAdd);
-
-                //Add timeslot to booking
-                bookingToAdd.FK_TimeslotId = timeslotToAdd.Id;
-                bookingToAdd.Timeslot = timeslotToAdd;
-
+                
                 //Add booking
                 await _bookingRepository.AddBookingAsync(bookingToAdd);
 
@@ -236,6 +236,7 @@ namespace RestaurantManager.Services
 
             else
             {
+                Console.WriteLine("booking failed, no avaliable tables");
                 return false;
             }
         }

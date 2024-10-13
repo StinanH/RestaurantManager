@@ -13,6 +13,6 @@ namespace RestaurantManager.Services.IServices
         Task <bool>AddBookingAsync(BookingCreateDTO bookingDTO);
         Task UpdateBookingAsync(BookingUpdateDTO bookingDTO);
         Task DeleteBookingAsync(int bookingId);
-        Task<IEnumerable<TableGetDTO>> IsBookingAvaliable(BookingCreateDTO bookingDTO);
+        Task<TableGetDTO> IsBookingAvaliable(BookingCreateDTO bookingDTO);
     }
 }

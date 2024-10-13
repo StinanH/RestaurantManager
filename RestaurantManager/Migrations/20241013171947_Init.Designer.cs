@@ -12,7 +12,7 @@ using RestaurantManager.Data;
 namespace RestaurantManager.Migrations
 {
     [DbContext(typeof(RestaurantManagerContext))]
-    [Migration("20241011152858_Init")]
+    [Migration("20241013171947_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -60,7 +60,7 @@ namespace RestaurantManager.Migrations
                             Id = 1,
                             Email = "Admin@gmail.com",
                             FK_User = 5,
-                            PasswordHashed = "$2a$11$uwRLWFky/foDrhxGCyOSwekoZLp8.ytnU2lypaODvVST2H4xOo0.a",
+                            PasswordHashed = "$2a$11$X0RBosrovnEc7FC.HY7xEOQsRk9sfRSFmXPgQ5VwXdQftTeInjUP2",
                             isAdmin = true
                         },
                         new
@@ -68,7 +68,7 @@ namespace RestaurantManager.Migrations
                             Id = 2,
                             Email = "User@gmail.com",
                             FK_User = 6,
-                            PasswordHashed = "$2a$11$9xUzyEt5ZyUMfAXA/83AOeW4vZL3nPDLWFUta2P031LLq8urLvxvC",
+                            PasswordHashed = "$2a$11$HMwmz4mUOj5Ci5eykZ9w2.WeDE/k90raYtMFROd7aCmTY18HiuH2K",
                             isAdmin = false
                         });
                 });
@@ -580,6 +580,26 @@ namespace RestaurantManager.Migrations
                     b.HasIndex("RestaurantId");
 
                     b.ToTable("Tables");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FK_RestaurantId = 1,
+                            NrOfSeats = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FK_RestaurantId = 1,
+                            NrOfSeats = 4
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FK_RestaurantId = 1,
+                            NrOfSeats = 6
+                        });
                 });
 
             modelBuilder.Entity("RestaurantManager.Models.TimeSlot", b =>

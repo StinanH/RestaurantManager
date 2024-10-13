@@ -143,6 +143,13 @@ namespace RestaurantManager.Data
                 new Account() { Id = 1, Email = "Admin@gmail.com", FK_User = 5, isAdmin = true, PasswordHashed = BCrypt.Net.BCrypt.HashPassword("AdminPassword123")},
                 new Account() { Id = 2, Email = "User@gmail.com", FK_User = 6, isAdmin = false, PasswordHashed = BCrypt.Net.BCrypt.HashPassword("UserPassword123")}
                 );
+
+            modelBuilder.Entity<Table>().HasData(
+                new Table() { Id = 1, FK_RestaurantId = 1, NrOfSeats = 2 },
+                new Table() { Id = 2, FK_RestaurantId = 1, NrOfSeats = 4 },
+                new Table() { Id = 3, FK_RestaurantId = 1, NrOfSeats = 6 }
+
+                );
         }
     }
 }

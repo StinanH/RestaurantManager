@@ -56,97 +56,63 @@ namespace RestaurantManager.Data.Repos
             return booking;
         }
 
-        public async Task<IEnumerable<BookingCreateDTO>> GetAvaliableBookingsOnDayAsync(int restaurantId,int numberOfPeople, DateTime date)
+        public async Task<IEnumerable<BookingCreateDTO>> GetAvaliableBookingsOnDayAsync(int restaurantId, int numberOfPeople, DateTime date)
         {
             int openingHour = 10;
             int closingHour = 22;
 
-            List<BookingCreateDTO>possibleBookingDTOs = new List<BookingCreateDTO>();
+            List<BookingCreateDTO> possibleBookingDTOs = new List<BookingCreateDTO>();
 
-            //getting all bookings at restaurant
-            var BookingsAtRestaurant = await _context.Bookings
-            .Where(b => b.Restaurant.Id == 1)
-            .Include(b => b.Table)
-            .Include(b => b.Timeslot)
-            .ToListAsync();
+            // Getting all bookings at the restaurant
+            var bookingsAtRestaurant = await _context.Bookings
+                .Where(b => b.Restaurant.Id == restaurantId)
+                .Include(b => b.Table)
+                .Include(b => b.Timeslot)
+                .ToListAsync();
 
-            var TablesAtRestaurant = await _context.Tables
-            .Where(t => t.FK_RestaurantId == 1)
-            .OrderBy(t => t.NrOfSeats)
-            .ToListAsync();
+            var tablesAtRestaurant = await _context.Tables
+                .Where(t => t.FK_RestaurantId == restaurantId)
+                .OrderBy(t => t.NrOfSeats)
+                .ToListAsync();
 
             for (int hour = openingHour; hour <= closingHour - 2; hour++)
             {
-                DateTime slotStarttime = new DateTime(
-                    date.Year, date.Month, date.Day, hour, 0, 0);
+                DateTime slotStarttime = new DateTime(date.Year, date.Month, date.Day, hour, 0, 0);
+                DateTime slotEndtime = new DateTime(date.Year, date.Month, date.Day, hour + 2, 0, 0);
 
-                DateTime slotEndtime = new DateTime(
-                    date.Year, date.Month, date.Day, hour+2, 0, 0);
-                
-                var BookingsAtTime = BookingsAtRestaurant
+                var bookingsAtTime = bookingsAtRestaurant
                     .Where(b => b.Timeslot.StartTime <= slotStarttime && b.Timeslot.EndTime >= slotEndtime)
-                    .ToList() ?? new List<Booking>();
+                    .ToList();
 
-                var possibleTables = TablesAtRestaurant
-                    .ToList() ?? new List<Table>();
+                // Filter the tables before the loop
+                var availableTables = tablesAtRestaurant
+                    .Where(t => t.NrOfSeats >= numberOfPeople)  // Only considers tables with enough seats
+                    .ToList();
 
-                if (BookingsAtTime.Count >= TablesAtRestaurant.Count)
+                // Remove tables that are already booked at this time
+                foreach (var booking in bookingsAtTime)
                 {
-                    possibleBookingDTOs = new List<BookingCreateDTO>();
-                    return possibleBookingDTOs;
+                    availableTables.RemoveAll(t => t.Id == booking.FK_TableId); // Removes all bookings for the same table
                 }
 
-                else
+                if (availableTables.Count == 0)
                 {
-                    
-                    for (int i = possibleTables.Count-1 ; i >= 0; i--)
-                    {
-                        foreach (Booking booking in BookingsAtTime)
-                        {
+                    continue; // Skip this slot if no tables are available
+                }
 
-                            if (booking.FK_TableId == possibleTables[i].Id)
-                            {
-                                possibleTables.RemoveAt(i);
-                            }
-
-
-                        }
-
-                        if (possibleTables[i].NrOfSeats < numberOfPeople)
-                            {
-                                possibleTables.RemoveAt(i);
-
-                            }
-                        if (possibleTables.Count == 0)
-                            {
-
-                                return possibleBookingDTOs;
-                            }
-                    }
-
-                    if (possibleTables.Count == 0)
-                    {
-
-                        return possibleBookingDTOs;
-                    }
-
-                    else
-                    {
-                        possibleBookingDTOs.Add(new BookingCreateDTO
-                        {
-                            RestaurantId = restaurantId,
-                            requestedTime = slotStarttime,
-                            UserId = 6,
-                            NrOfPeople = numberOfPeople,
-                            Requests = ""
-                        });
-                    }
-                }             
+                // Add a new booking option for the available time slot
+                possibleBookingDTOs.Add(new BookingCreateDTO
+                {
+                    RestaurantId = restaurantId,
+                    requestedTime = slotStarttime,
+                    UserId = 6,  // Adjust as needed
+                    NrOfPeople = numberOfPeople,
+                    Requests = "" // Handle requests if needed
+                });
             }
 
             return possibleBookingDTOs;
         }
-
 
 
 
